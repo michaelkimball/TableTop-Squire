@@ -5,7 +5,7 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "com.tabletopuwfgroup.dndinterface"
+        applicationId "edu.uwf.tabletopgroup.dndinterface"
         minSdkVersion 19
         targetSdkVersion 22
         versionCode 1
