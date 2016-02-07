@@ -56,13 +56,6 @@ public class AuthActivity extends AppCompatActivity implements LoaderCallbacks<C
     private static final int REQUEST_READ_CONTACTS = 0;
 
     /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
-    };
-    /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
     private UserLoginTask mAuthTask = null;
@@ -316,6 +309,9 @@ public class AuthActivity extends AppCompatActivity implements LoaderCallbacks<C
         private boolean hasData;
         UserLoginTask(String email, String password) {
             User.createUser(email, password);
+            /**
+             * Lets {@link #onPostExecute(Boolean)} know whether request passed or failed
+             */
             mCallback = new Handler.Callback() {
                 public static final String TAG = "ULTcb";
                 @Override
@@ -360,7 +356,7 @@ public class AuthActivity extends AppCompatActivity implements LoaderCallbacks<C
             showProgress(false);
             Log.d(TAG, String.format("onPostExecute(%b)", (boolean)success));
             if (success) {
-                //finish();
+                //TODO: Link to next activity
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();

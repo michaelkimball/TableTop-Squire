@@ -3,7 +3,10 @@ package edu.uwf.tabletopgroup.models;
 import java.util.Comparator;
 
 /**
- * Created by michael on 2/6/16.
+ * Model of the character to hold all of the
+ * data from the character sheet
+ * @author Michael Kimball
+ * TODO: Add skills, spells, health, inventory, saves, armor, and more
  */
 public class Character implements Comparator{
     public static final String NAME = "name";

@@ -14,21 +14,26 @@ import edu.uwf.tabletopgroup.models.Character;
 import edu.uwf.tabletopgroup.models.User;
 
 /**
- *
+ * Used to perform specific HTTP requests
+ * to the TableTop backend
+ * @author Michael Kimball
+ * TODO: Add put and delete requests for characters and users
  */
 public class TableTopRestClientUser {
+
     public static final String TAG = "TTRCU";
-    public static final String USERNAME = "username";
+    public static final String EMAIL = "email";
     public static final String PASSWORD = "password";
     public static final int SUCCESS_MESSAGE = 0;
     public static final int FAILURE_MESSAGE = 1;
     private static Context application;
     private static TableTopRestClient client;
     private static TableTopRestClientUser clientUser;
+
     /**
-     *
-     * @param application
-     * @throws Exception
+     * Private constructor to maintain singleton
+     * @param application - context reference
+     * @throws Exception - Thrown if context is null
      */
     private TableTopRestClientUser(Context application) throws Exception{
         if(application == null)
@@ -36,20 +41,49 @@ public class TableTopRestClientUser {
         setContext(application);
         setClient(new TableTopRestClient(getContext()));
     }
+
+    /**
+     * Grabs or creates single reference to class
+     * @param application - context reference
+     * @return reference to TableTopRestClientUser
+     * @throws Exception - Thrown if context is null
+     */
     public static TableTopRestClientUser getClientUser(Context application) throws Exception{
         if(clientUser == null)
             clientUser = new TableTopRestClientUser(application);
         return clientUser;
     }
+
+    /**
+     * Gets context reference
+     * @return context reference
+     */
     public Context getContext(){
         return TableTopRestClientUser.application;
     }
+
+    /**
+     * Sets context reference
+     * @param application
+     */
     private void setContext(Context application){
         TableTopRestClientUser.application = application;
     }
+
+    /**
+     * Used to set the client reference
+     * @param client - interacts with the server
+     */
     private void setClient(TableTopRestClient client){
         TableTopRestClientUser.client = client;
     }
+
+    /**
+     * Sets authentication then grabs all users in the database
+     * @param user - the current user for authentication
+     * @throws JSONException - is thrown if access is
+     * unauthorized
+     */
     public void getUsers(User user) throws JSONException {
         client.setBasicAuth(user.getEmail(), user.getPassword());
         client.get("users", null, new JsonHttpResponseHandler() {
@@ -91,11 +125,16 @@ public class TableTopRestClientUser {
 
             }
         });
-        Log.d(TAG, "blurb");
     }
-    public void postUsers(String username, String password){
+
+    /**
+     * Creates user
+     * @param email - email of the user
+     * @param password - password of the user to be hashed
+     */
+    public void postUsers(String email, String password){
         RequestParams params = new RequestParams();
-        params.put(USERNAME, username);
+        params.put(EMAIL, email);
         params.put(PASSWORD, password);
         client.post("users", params, new JsonHttpResponseHandler() {
             @Override
@@ -119,6 +158,15 @@ public class TableTopRestClientUser {
             }
         });
     }
+
+    /**
+     * Grabs characters from the database
+     * @param user - the current user
+     * @param callback - method to execute at the
+     *                 completion of the GET request
+     * @throws JSONException - If authorization fails
+     * this exception will be thrown
+     */
     public void getCharacters(User user, final Handler.Callback callback) throws JSONException {
         client.setBasicAuth(user.getEmail(), user.getPassword());
         client.get("characters", null, new JsonHttpResponseHandler() {
@@ -128,7 +176,7 @@ public class TableTopRestClientUser {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
                     Log.d(TAG + "getCharacters", response.toString(2));
-                    if(!(response.length() == 0)){
+                    if (!(response.length() == 0)) {
                         //do something
                     }
                     setSuccessMessage();
@@ -181,6 +229,12 @@ public class TableTopRestClientUser {
             }
         });
     }
+
+    /**
+     * Sends {@link edu.uwf.tabletopgroup.models.Character} data to the
+     * server for processing.
+     * @param character - Character to be added to users roster.
+     */
     public void postCharacters(Character character){
         RequestParams params = new RequestParams();
         params.add(Character.NAME, character.getName());
