@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <!-- To access any networking features -->
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -16,13 +17,23 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".AuthActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name" />
+        <activity
+            android:name=".UserRegisterActivity"
+            android:label="@string/title_activity_user_register" />
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".GameRoom"
+            android:label="@string/title_activity_game_room" />
+        <activity android:name=".WelcomeActivity"></activity>
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package edu.uwf.tabletopgroup.models;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Models the single user object
@@ -8,48 +9,32 @@ import java.util.ArrayList;
  */
 public class User {
 
-    private static User user;
+    public static boolean isLoggedIn = false;
+
     private static String email;
     private static String password;
     private static String username;
-    private static ArrayList<Character> characters;
+    private static List<Character> characters = new ArrayList<>();
 
-    private User(){}
-
-    /**
-     * Initializes user
-     * @param email - email of user
-     * @param password - password of user
-     * @return - new User object
-     */
-    public static User createUser(String email, String password){
-        user = new User();
-        user.setEmail(email);
-        user.setPassword(password);
-        return user;
-    }
-
-    /**
-     * Returns User reference
-     * @return User reference
-     */
-    public static User getUser(){
-        return user;
+    public static void setUser(String email, String pass)
+    {
+        User.email = email;
+        User.password = pass;
     }
 
     /**
      * Returns User email
      * @return User email
      */
-    public String getEmail() {
-        return email;
+    public static String getEmail() {
+        return User.email;
     }
 
     /**
      * Sets User email
      * @param email - User's email
      */
-    public void setEmail(String email) {
+    public static void setEmail(String email) {
         User.email = email;
     }
 
@@ -57,15 +42,15 @@ public class User {
      * Returns User password
      * @return User password
      */
-    public String getPassword() {
-        return password;
+    public static String getPassword() {
+        return User.password;
     }
 
     /**
      * Set the password of User
      * @param password - New password
      */
-    public void setPassword(String password) {
+    public static void setPassword(String password) {
         User.password = password;
     }
 
@@ -73,34 +58,33 @@ public class User {
      * Returns User username
      * @return User username
      */
-    public String getUsername() {
-        return username;
+    public static String getUsername() {
+        return User.username;
     }
 
     /**
      * Set the username of User
      * @param username - New username
      */
-    public void setUsername(String username){
-        user.username = username;
+    public static void setUsername(String username){
+        User.username = username;
     }
 
     /**
      * Add character to the roster
      * @param character - New character
      */
-    public void addCharacter(Character character){
-        if(characters == null)
-            characters = new ArrayList<>();
-        characters.add(character);
+    public static void addCharacter(Character character)
+    {
+        User.characters.add(character);
     }
 
     /**
      * Returns User characters
      * @return User characters
      */
-    public ArrayList<Character> getCharacters(){
-        return characters;
+    public static List<Character> getCharacters(){
+        return User.characters;
     }
 
 }

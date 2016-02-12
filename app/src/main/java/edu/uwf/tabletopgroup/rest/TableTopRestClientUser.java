@@ -1,5 +1,6 @@
 package edu.uwf.tabletopgroup.rest;
 
+import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
@@ -12,6 +13,7 @@ import cz.msebera.android.httpclient.Header;
 
 import edu.uwf.tabletopgroup.models.Character;
 import edu.uwf.tabletopgroup.models.User;
+import edu.uwf.tabletopgroup.tabletop_squire.R;
 
 /**
  * Used to perform specific HTTP requests
@@ -22,8 +24,7 @@ import edu.uwf.tabletopgroup.models.User;
 public class TableTopRestClientUser {
 
     public static final String TAG = "TTRCU";
-    public static final String EMAIL = "email";
-    public static final String PASSWORD = "password";
+
     public static final int SUCCESS_MESSAGE = 0;
     public static final int FAILURE_MESSAGE = 1;
     private static Context application;
@@ -134,8 +135,10 @@ public class TableTopRestClientUser {
      */
     public void postUsers(String email, String password){
         RequestParams params = new RequestParams();
-        params.put(EMAIL, email);
-        params.put(PASSWORD, password);
+
+        params.put(getContext().getString(R.string.key_email), email);
+        params.put(getContext().getString(R.string.key_password), password);
+
         client.post("users", params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -161,14 +164,14 @@ public class TableTopRestClientUser {
 
     /**
      * Grabs characters from the database
-     * @param user - the current user
+
      * @param callback - method to execute at the
      *                 completion of the GET request
      * @throws JSONException - If authorization fails
      * this exception will be thrown
      */
-    public void getCharacters(User user, final Handler.Callback callback) throws JSONException {
-        client.setBasicAuth(user.getEmail(), user.getPassword());
+    public void getCharacters(final Handler.Callback callback) throws JSONException {
+        client.setBasicAuth(User.getEmail(), User.getPassword());
         client.get("characters", null, new JsonHttpResponseHandler() {
             Message mMessage = new Message();
 
@@ -237,36 +240,42 @@ public class TableTopRestClientUser {
      */
     public void postCharacters(Character character){
         RequestParams params = new RequestParams();
-        params.add(Character.NAME, character.getName());
-        params.add(Character.RACE, character.getRace());
-        params.add(Character.CLASS, character.getCharacterClass());
-        params.add(Character.STRENGTH, String.valueOf(character.getStrength()));
-        params.add(Character.DEXTERITY, String.valueOf(character.getDexterity()));
-        params.add(Character.CONSTITUTION, String.valueOf(character.getConstitution()));
-        params.add(Character.INTELLIGENCE, String.valueOf(character.getIntelligence()));
-        params.add(Character.WISDOM, String.valueOf(character.getWisdom()));
-        params.add(Character.CHARISMA, String.valueOf(character.getCharisma()));
-        params.add(Character.LEVEL, String.valueOf(character.getLevel()));
-        params.add(Character.EXPERIENCE, String.valueOf(character.getExperience()));
+
+        Context context = getContext();
+
+        params.add(context.getString(R.string.key_name), character.getName());
+        params.add(context.getString(R.string.key_race), character.getRace());
+        params.add(context.getString(R.string.key_class), character.getCharacterClass());
+        params.add(context.getString(R.string.key_stat_strenth), String.valueOf(character.getStrength()));
+        params.add(context.getString(R.string.key_stat_dexterity), String.valueOf(character.getDexterity()));
+        params.add(context.getString(R.string.key_stat_constitution), String.valueOf(character.getConstitution()));
+        params.add(context.getString(R.string.key_stat_intelligence), String.valueOf(character.getIntelligence()));
+        params.add(context.getString(R.string.key_stat_wisdom), String.valueOf(character.getWisdom()));
+        params.add(context.getString(R.string.key_stat_charisma), String.valueOf(character.getCharisma()));
+        params.add(context.getString(R.string.key_level), String.valueOf(character.getLevel()));
+        params.add(context.getString(R.string.key_experience), String.valueOf(character.getExperience()));
+
         client.post("characters", params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
-                    Log.d(TAG + "postCharacters", response.toString(2));
+                    Log.d(TAG + "postCharacters", response.toString(2)); // what is 2?
                 } catch (JSONException e) {
-                    Log.e(TAG + "postCharacters",
-                            String.format("onSuccess(%d, %s", statusCode, response), e);
-                    for (Header header : headers)
+                    Log.e(TAG + "postCharacters", String.format("onSuccess(%d, %s", statusCode, response), e);
+
+                    for (Header header : headers) {
                         Log.e(TAG + "postCharacters", "header: " + header.getValue());
+                    }
                 }
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.e(TAG + "postCharacters",
-                        String.format("onFailure(%d, %s, %s", statusCode, throwable, errorResponse), throwable);
-                for (Header header : headers)
+                Log.e(TAG + "postCharacters", String.format("onFailure(%d, %s, %s", statusCode, throwable, errorResponse), throwable);
+
+                for (Header header : headers) {
                     Log.e(TAG + "postCharacters", "header: " + header.getValue());
+                }
             }
         });
     }
