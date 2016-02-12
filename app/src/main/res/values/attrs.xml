@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="dice_roll_view">
+        <attr name="dice_count" format="integer" />
+        <attr name="dice_faces" format="integer" />
+        <attr name="initial_roll" format="integer" />
+        <attr name="show_pips" format="boolean" />
+        <attr name="distance_between_dice" />
+    </declare-styleable>
+</resources>

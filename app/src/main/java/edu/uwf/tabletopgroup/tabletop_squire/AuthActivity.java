@@ -308,7 +308,7 @@ public class AuthActivity extends AppCompatActivity implements LoaderCallbacks<C
         private final Handler.Callback mCallback;
         private boolean hasData;
         UserLoginTask(String email, String password) {
-            User.createUser(email, password);
+            User.setUser(email, password);
             /**
              * Lets {@link #onPostExecute(Boolean)} know whether request passed or failed
              */
@@ -339,9 +339,9 @@ public class AuthActivity extends AppCompatActivity implements LoaderCallbacks<C
         @Override
         protected Boolean doInBackground(Void... params) {
             try {
-                User user = User.getUser();
+
                 Looper.prepare();
-                clientUser.getCharacters(user, mCallback);
+                clientUser.getCharacters(mCallback);
             } catch (JSONException e) {
                 Log.e(TAG, String.format("doInBackground(%s)", params), e);
                 return false;

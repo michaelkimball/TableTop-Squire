@@ -8,18 +8,7 @@ import java.util.Comparator;
  * @author Michael Kimball
  * TODO: Add skills, spells, health, inventory, saves, armor, and more
  */
-public class Character implements Comparator{
-    public static final String NAME = "name";
-    public static final String RACE = "race";
-    public static final String CLASS = "class";
-    public static final String STRENGTH = "strength";
-    public static final String DEXTERITY = "dexterity";
-    public static final String CONSTITUTION = "constitution";
-    public static final String INTELLIGENCE = "intelligence";
-    public static final String WISDOM = "wisdom";
-    public static final String CHARISMA = "charisma";
-    public static final String LEVEL = "level";
-    public static final String EXPERIENCE = "experience";
+public class Character {
     private String mName;
     private String mRace;
     private String mCharacterClass;
@@ -138,16 +127,4 @@ public class Character implements Comparator{
         mExperience = experience;
     }
 
-    @Override
-    public int compare(Object lhs, Object rhs) {
-        if(lhs == null && rhs == null)
-            return 0;
-        else if(lhs == null)
-            return -1;
-        else if(rhs == null)
-            return 1;
-        Character left = (Character) lhs;
-        Character right = (Character) rhs;
-        return left.getName().compareTo(right.getName());
-    }
 }
