@@ -33,6 +33,11 @@ public class DiceView extends TextView {
         processAttribute(attrs);
     }
 
+    public void onCreate()
+    {
+
+    }
+
     private final void processAttribute(AttributeSet attrs) {
         TypedArray tArray = getContext().obtainStyledAttributes(attrs, R.styleable.dice_roll_view);
         int cnt = tArray.getIndexCount(); // count the attributes gives....so we can loop over them
@@ -78,7 +83,7 @@ public class DiceView extends TextView {
         {
             sum += i.roll();
         }
-
+        this.setText(this.toString().concat("Rolled: " + sum));
         return sum;
     }
 
