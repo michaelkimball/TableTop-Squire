@@ -339,8 +339,8 @@ public class AuthActivity extends AppCompatActivity implements LoaderCallbacks<C
         @Override
         protected Boolean doInBackground(Void... params) {
             try {
-
-                Looper.prepare();
+                if(Looper.myLooper() == null)
+                    Looper.prepare();
                 clientUser.getCharacters(mCallback);
             } catch (JSONException e) {
                 Log.e(TAG, String.format("doInBackground(%s)", params), e);

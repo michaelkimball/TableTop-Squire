@@ -3,6 +3,7 @@ package edu.uwf.tabletopgroup.rest;
 import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 
@@ -133,10 +134,10 @@ public class TableTopRestClientUser {
      * @param email - email of the user
      * @param password - password of the user to be hashed
      */
-    public void postUsers(String email, String password){
+    public void postUsers(String email, String password, final Looper looper){
         RequestParams params = new RequestParams();
 
-        params.put(getContext().getString(R.string.key_email), email);
+        params.put(getContext().getString(R.string.key_username), email);
         params.put(getContext().getString(R.string.key_password), password);
 
         client.post("users", params, new JsonHttpResponseHandler() {
@@ -149,6 +150,8 @@ public class TableTopRestClientUser {
                             String.format("onSuccess(%d, %s", statusCode, response), e);
                     for (Header header : headers)
                         Log.e(TAG + "postUsers", "header: " + header.getValue());
+                }finally{
+                    looper.quitSafely();
                 }
             }
 
@@ -158,6 +161,8 @@ public class TableTopRestClientUser {
                         String.format("onFailure(%d, %s, %s", statusCode, throwable, errorResponse), throwable);
                 for (Header header : headers)
                     Log.e(TAG + "postUsers", "header: " + header.getValue());
+
+                looper.quitSafely();
             }
         });
     }

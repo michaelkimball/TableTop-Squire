@@ -56,7 +56,7 @@ public class TableTopRestClient  {
      * @param responseHandler - handle success or failure
      */
     public void post(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
-        client.addHeader(HTTP.CONTENT_TYPE, "application/x-www-form-urlencoded;charset=UTF-8");
+        client.addHeader("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
         client.post(getAbsoluteUrl(url), params, responseHandler);
         client.removeHeader(HTTP.CONTENT_TYPE);
     }

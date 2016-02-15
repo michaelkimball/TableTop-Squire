@@ -5,6 +5,6 @@
         <attr name="dice_faces" format="integer" />
         <attr name="initial_roll" format="integer" />
         <attr name="show_pips" format="boolean" />
-        <attr name="distance_between_dice" />
+        <attr name="distance_between_dice" format="float" />
     </declare-styleable>
 </resources>
