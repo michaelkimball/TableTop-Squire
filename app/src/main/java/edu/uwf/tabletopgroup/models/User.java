@@ -14,11 +14,11 @@ public class User {
     private static String email;
     private static String password;
     private static String username;
-    private static List<Character> characters = new ArrayList<>();
+    private static List<Character> characters;
 
-    public static void setUser(String email, String pass)
+    public static void setUser(String username, String pass)
     {
-        User.email = email;
+        User.username = username;
         User.password = pass;
     }
 
@@ -76,9 +76,15 @@ public class User {
      */
     public static void addCharacter(Character character)
     {
+        if(User.characters == null){
+            User.characters = new ArrayList<>();
+        }
         User.characters.add(character);
     }
 
+    public static void setCharacters(ArrayList<Character> characters){
+        User.characters = characters;
+    }
     /**
      * Returns User characters
      * @return User characters

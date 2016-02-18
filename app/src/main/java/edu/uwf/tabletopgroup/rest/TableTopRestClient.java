@@ -17,7 +17,7 @@ public class TableTopRestClient  {
     private static Context application;
     private static PersistentCookieStore cookieStore;
     private static AsyncHttpClient client;
-    private static final String BASE_URL = "http://192.169.175.123:3000/api/";
+    private static final String BASE_URL = "http://10.0.2.2:3000/api/";
 
     /**
      * Create HTTP client specific to TT backend
@@ -32,11 +32,11 @@ public class TableTopRestClient  {
 
     /**
      * Set basic authentication header
-     * @param email - user email
+     * @param username - user email
      * @param password - user password
      */
-    public void setBasicAuth(String email, String password){
-        client.setBasicAuth(email, password);
+    public void setBasicAuth(String username, String password){
+        client.setBasicAuth(username, password);
     }
 
     /**

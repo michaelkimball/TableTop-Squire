@@ -3,9 +3,10 @@
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
+    <string name="prompt_username">Username</string>
     <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="hint_register">Don\'t have an account?</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
@@ -15,20 +16,6 @@
     <string name="title_character_list">Characters</string>
     <string name="title_character_detail">Character Detail</string>
 
-    <string name="key_name">NAME</string>
-    <string name="key_race">RACE</string>
-    <string name="key_class">CLASS</string>
-    <string name="key_stat_strenth">STRENGTH</string>
-    <string name="key_stat_dexterity">DEXTERITY</string>
-    <string name="key_stat_charisma">CHARISMA</string>
-    <string name="key_stat_wisdom">WISDOM</string>
-    <string name="key_stat_intelligence">INTELLIGENCE</string>
-    <string name="key_stat_constitution">CONSTITUTION</string>
-    <string name="key_level">LEVEL</string>
-    <string name="key_experience">EXPERIENCE</string>
-    <string name="key_password">password</string>
-    <string name="key_email">email</string>
-    <string name="key_username">username</string>
     <string name="title_activity_user_register">UserRegisterActivity</string>
     <string name="action_settings">Settings</string>
     <string name="prompt_password_match">Re-Enter Password</string>
