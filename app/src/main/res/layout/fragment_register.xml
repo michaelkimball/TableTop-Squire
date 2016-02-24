@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/username"
                 android:hint="@string/user_name"
-                android:inputType="text|textNoSuggestions|number|textPersonName" />
+                />
 
             <EditText
                 android:id="@+id/email"

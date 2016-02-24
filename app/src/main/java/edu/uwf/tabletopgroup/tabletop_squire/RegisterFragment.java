@@ -36,7 +36,8 @@ public class RegisterFragment extends Fragment {
         }catch(Exception e){
             Log.e(TAG, "onCreateView", e);
         }
-        emailET = (EditText)v.findViewById(R.id.username);
+        usernameET = (EditText)v.findViewById(R.id.username);
+        emailET = (EditText)v.findViewById(R.id.email);
         passwordET = (EditText)v.findViewById(R.id.password);
         passwordConfirmET = (EditText)v.findViewById(R.id.password_match);
         registerBT = (Button)v.findViewById(R.id.email_register_button);
@@ -56,7 +57,7 @@ public class RegisterFragment extends Fragment {
             client.postUsers(username, email, password, new Handler.Callback() {
                 @Override
                 public boolean handleMessage(Message msg) {
-                    if(msg.what == 1){
+                    if(msg.what == TableTopRestClientUser.SUCCESS_MESSAGE){
                         Intent i = new Intent(getContext(), WelcomeActivity.class);
                         startActivity(i);
                     }else{
@@ -69,7 +70,7 @@ public class RegisterFragment extends Fragment {
     }
 
     private boolean hasUsername(String username) {
-        return textIsNotEmpty("Username", username);
+        return !textIsNotEmpty("Username", username);
     }
 
     private boolean passwordsAreEqual(String password){

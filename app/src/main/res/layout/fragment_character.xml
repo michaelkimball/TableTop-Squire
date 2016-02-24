@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:padding="16dp"
+        android:text="Name:"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/name_label"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:padding="16dp"
+        android:text="Sam Doe"
+        android:id="@+id/name"
+        android:layout_below="@+id/name_label"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        android:paddingStart="32dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Level"
+        android:id="@+id/level_label"
+        android:layout_above="@+id/name"
+        android:layout_toEndOf="@+id/name"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:padding="16dp"
+        android:text="1"
+        android:id="@+id/level"
+        android:layout_below="@+id/level_label"
+        android:layout_alignEnd="@+id/level_label"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        android:paddingStart="32dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Experience"
+        android:id="@+id/experience_label"
+        android:layout_above="@+id/level"
+        android:layout_toEndOf="@+id/level_label"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:padding="16dp"
+        android:text="0"
+        android:id="@+id/experience"
+        android:layout_below="@+id/experience_label"
+        android:layout_alignEnd="@+id/experience_label"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:padding="16dp"
+        android:text="STR:"
+        android:id="@+id/strength_label"
+        android:layout_below="@+id/name"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:padding="16dp"
+        android:text="18"
+        android:id="@+id/strength"
+        android:layout_alignTop="@+id/strength_label"
+        android:layout_toEndOf="@+id/strength_label"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:padding="16dp"
+        android:text="DEX:"
+        android:id="@+id/dexterity_label"
+        android:layout_alignTop="@+id/strength"
+        android:layout_toEndOf="@+id/name"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:padding="16dp"
+        android:text="18"
+        android:id="@+id/dexterity"
+        android:layout_alignTop="@+id/dexterity_label"
+        android:layout_alignStart="@+id/level"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:padding="16dp"
+        android:text="CON:"
+        android:id="@+id/constitution_label"
+        android:layout_alignTop="@+id/dexterity"
+        android:layout_toEndOf="@+id/level"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:padding="16dp"
+        android:text="18"
+        android:id="@+id/constitution"
+        android:layout_alignTop="@+id/constitution_label"
+        android:layout_toStartOf="@+id/experience"/>
+
+</RelativeLayout>
