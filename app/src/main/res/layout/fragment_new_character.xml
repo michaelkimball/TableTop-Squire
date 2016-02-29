@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:textAlignment="center"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Create Character"
+        android:id="@+id/title"/>
+
+    <EditText
+        style="@style/EntryField"
+        android:inputType="textPersonName"
+        android:hint="@string/prompt_name"
+        android:id="@+id/name"/>
+    <EditText
+        style="@style/EntryField"
+        android:hint="@string/prompt_race"
+        android:id="@+id/race"/>
+    <EditText
+        style="@style/EntryField"
+        android:hint="@string/prompt_class"
+        android:id="@+id/character_class"/>
+</LinearLayout>
