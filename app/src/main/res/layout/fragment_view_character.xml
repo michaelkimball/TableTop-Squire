@@ -82,7 +82,7 @@
         android:text="@string/hint_race"
         android:id="@+id/race"
         android:layout_below="@id/level_label"
-        android:layout_toEndOf="@id/class_label"/>
+        android:layout_toEndOf="@id/race_label"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
