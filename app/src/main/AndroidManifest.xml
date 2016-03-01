@@ -28,6 +28,8 @@
             android:name=".GameRoom"
             android:label="@string/title_activity_game_room" />
         <activity android:name=".WelcomeActivity"></activity>
+        <activity android:name=".CharacterActivity"/>
+
     </application>
 
 </manifest>

@@ -1,36 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <ImageView
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/splash"
+                android:gravity="center_horizontal">
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:background="@drawable/splash"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:background="@color/colorPrimaryTransparent"
+        android:orientation="vertical"
+        android:padding="32dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/colorLight"
+            android:text="@string/splash_welcome"
+            android:id="@+id/tv_welcome_msg"
+            android:layout_gravity="center_horizontal"
         />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/splash_welcome"
-        android:id    ="@+id/tv_welcome_msg"
-    android:layout_gravity="center_horizontal" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/game_room_create"
-        android:id="@+id/btn_create_game_room"
-        android:onClick="btn_create_game_room_onClick"
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/game_room_create"
+            android:id="@+id/btn_create_game_room"
+            android:onClick="btn_create_game_room_onClick"
         />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/btn_join_game_room"
-        android:onClick="btn_join_game_room_onClick"
-        android:text="@string/game_room_join"
-    />
-</LinearLayout>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_join_game_room"
+            android:onClick="btn_join_game_room_onClick"
+            android:text="@string/game_room_join"
+        />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="View Character"
+            android:id="@+id/btn_character"
+            android:layout_gravity="center_horizontal"
+        />
+    </LinearLayout>
+</RelativeLayout>

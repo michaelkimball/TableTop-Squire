@@ -1,6 +1,5 @@
 package edu.uwf.tabletopgroup.models;
 
-import java.util.Comparator;
 
 /**
  * Model of the character to hold all of the
@@ -9,6 +8,7 @@ import java.util.Comparator;
  * TODO: Add skills, spells, health, inventory, saves, armor, and more
  */
 public class Character {
+    private String mId;
     private String mName;
     private String mRace;
     private String mCharacterClass;
@@ -24,10 +24,11 @@ public class Character {
     public Character(String name){
         setName(name);
     }
-    public Character(String name, String race, String characterClass){
+    public Character(String name, String race, String characterClass, String id){
         setName(name);
         setRace(race);
         setCharacterClass(characterClass);
+        setId(id);
     }
 
     public void setStats(int strength, int dexterity, int constitution, int intelligence, int wisdom, int charisma){
@@ -37,6 +38,14 @@ public class Character {
         setIntelligence(intelligence);
         setWisdom(wisdom);
         setCharisma(charisma);
+    }
+
+    public void setId(String id){
+        mId = id;
+    }
+
+    public String getId(){
+        return mId;
     }
 
     public String getName() {

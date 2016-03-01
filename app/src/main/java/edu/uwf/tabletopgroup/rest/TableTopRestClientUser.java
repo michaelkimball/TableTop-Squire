@@ -80,48 +80,48 @@ public class TableTopRestClientUser {
     }
 
     /**
-     * Sets authentication then grabs all users in the database
+     * Sets authentication then grabs the current user from the database
      * @throws JSONException - is thrown if access is
      * unauthorized
      */
     public void getUser() throws JSONException {
         client.setBasicAuth(User.getUsername(), User.getPassword());
-        client.get("users", null, new JsonHttpResponseHandler() {
+        client.get("user", null, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
-                    Log.d(TAG + "getUsers", response.toString(2));
+                    Log.d(TAG + "getUser", response.toString(2));
                 } catch (JSONException e) {
-                    Log.e(TAG + "getUsers",
-                            String.format("onSuccess(%d, %s, %s)", statusCode, headers, response), e);
+                    Log.e(TAG + "getUser",
+                            String.format("JSONObject onSuccess(%d, %s, %s)", statusCode, headers, response), e);
                 }
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray array) {
                 try {
-                    Log.d(TAG + "getUsers", array.toString(2));
+                    Log.d(TAG + "getUser", array.toString(2));
                 } catch (JSONException e) {
-                    Log.e(TAG + "getUsers",
-                            String.format("onSuccess(%d, %s, %s)", statusCode, headers, array), e);
+                    Log.e(TAG + "getUser",
+                            String.format("JSONArray onSuccess(%d, %s, %s)", statusCode, headers, array), e);
                 }
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.e(TAG + "getUsers",
-                        String.format("onFailure(%d, %s, %s)",
+                Log.e(TAG + "getUser",
+                        String.format("JSONObject onFailure(%d, %s, %s)",
                                 statusCode, throwable, errorResponse), throwable);
                 for (Header header : headers)
-                    Log.e(TAG + "getUsers", "header: " + header.getValue());
+                    Log.e(TAG + "getUser", "header: " + header.getValue());
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Log.e(TAG + "getUsers",
-                        String.format("onFailure(%d, %s, %s)", statusCode, throwable, responseString), throwable);
+                Log.e(TAG + "getUser",
+                        String.format("String onFailure(%d, %s, %s)", statusCode, throwable, responseString), throwable);
                 for (Header header : headers)
-                    Log.e(TAG + "getUsers", "header: " + header.getValue());
+                    Log.e(TAG + "getUser", "header: " + header.getValue());
 
             }
         });
@@ -189,9 +189,10 @@ public class TableTopRestClientUser {
                     ArrayList<Character> characters = new ArrayList<Character>();
                     for(int i = 0; i < array.length(); i++){
                         JSONObject jsonObject = (JSONObject)array.get(i);
+                        String id = jsonObject.getString(TableTopKeys.KEY_ID);
                         String name = jsonObject.getString(TableTopKeys.KEY_NAME);
-                        String race = jsonObject.getString(TableTopKeys.KEY_NAME);
-                        String characterClass = jsonObject.getString(TableTopKeys.KEY_NAME);
+                        String race = jsonObject.getString(TableTopKeys.KEY_RACE);
+                        String characterClass = jsonObject.getString(TableTopKeys.KEY_CLASS);
                         int strength = jsonObject.getInt(TableTopKeys.KEY_STRENGTH);
                         int dexterity = jsonObject.getInt(TableTopKeys.KEY_DEXTERITY);
                         int constitution = jsonObject.getInt(TableTopKeys.KEY_CONSTITUTION);
@@ -200,7 +201,7 @@ public class TableTopRestClientUser {
                         int charisma = jsonObject.getInt(TableTopKeys.KEY_CHARISMA);
                         int level = jsonObject.getInt(TableTopKeys.KEY_LEVEL);
                         int experience = jsonObject.getInt(TableTopKeys.KEY_EXPERIENCE);
-                        Character character = new Character(name, race, characterClass);
+                        Character character = new Character(name, race, characterClass, id);
                         character.setStats(strength, dexterity, constitution, intelligence, wisdom, charisma);
                         character.setLevel(level);
                         character.setExperience(experience);

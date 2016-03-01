@@ -93,4 +93,19 @@ public class User {
         return User.characters;
     }
 
+    public static void updateUser(){
+
+    }
+
+    public static Character getCharacter(String id){
+        Character temp = null;
+        for(Character character : characters) {
+            if (character.getId().equals(id)){
+                temp = character;
+                break;
+            }
+        }
+        return temp;
+    }
+
 }
