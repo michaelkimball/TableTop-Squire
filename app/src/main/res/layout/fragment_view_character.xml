@@ -8,7 +8,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:padding="16dp"
-        android:text="Name:"
+        android:text="@string/name_label"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:id="@+id/name_label"/>
@@ -18,175 +18,217 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:padding="16dp"
-        android:text="Sam Doe"
+        android:text="@string/hint_name"
         android:id="@+id/name"
-        android:layout_below="@+id/name_label"
-        android:layout_alignParentStart="true"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="16dp"
-        android:paddingStart="32dp"
-        android:paddingEnd="16dp"
-        android:paddingBottom="16dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Level:"
-        android:id="@+id/level_label"
-        android:layout_above="@+id/name"
-        android:layout_toEndOf="@+id/name"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:padding="16dp"
-        android:text="1"
-        android:id="@+id/level"
-        android:layout_below="@+id/level_label"
-        android:layout_alignEnd="@+id/level_label"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="16dp"
-        android:paddingStart="32dp"
-        android:paddingEnd="16dp"
-        android:paddingBottom="16dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Experience:"
-        android:id="@+id/experience_label"
-        android:layout_above="@+id/level"
+        android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/level_label"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
         android:padding="16dp"
-        android:text="0"
-        android:id="@+id/experience"
-        android:layout_below="@+id/experience_label"
-        android:layout_alignEnd="@+id/experience_label"/>
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/level_label"
+        android:id="@+id/level_label"
+        android:layout_below="@+id/name_label"
+        android:layout_alignStart="@+id/name_label"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:padding="16dp"
-        android:text="STR:"
-        android:id="@+id/strength_label"
+        android:text="@string/attribute_placeholder"
+        android:id="@+id/level"
         android:layout_below="@+id/name"
-        android:layout_alignParentStart="true"/>
+        android:layout_toEndOf="@+id/level_label"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        android:paddingStart="32dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/experience_label"
+        android:id="@+id/experience_label"
+        android:layout_below="@id/name"
+        android:layout_toEndOf="@id/level"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:padding="16dp"
-        android:text="18"
-        android:id="@+id/strength"
-        android:layout_alignTop="@+id/strength_label"
-        android:layout_toEndOf="@+id/strength_label"/>
-
+        android:text="@string/attribute_placeholder"
+        android:id="@+id/experience"
+        android:layout_below="@id/name"
+        android:layout_toEndOf="@id/experience_label"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:padding="16dp"
-        android:text="DEX:"
-        android:id="@+id/dexterity_label"
-        android:layout_alignTop="@+id/strength"
-        android:layout_toEndOf="@+id/name"/>
-
+        android:text="@string/race_label"
+        android:id="@+id/race_label"
+        android:layout_below="@id/level_label"
+        android:layout_alignStart="@id/level_label"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:padding="16dp"
-        android:text="18"
-        android:id="@+id/dexterity"
-        android:layout_alignTop="@+id/dexterity_label"
-        android:layout_toEndOf="@+id/dexterity_label"/>
-
+        android:text="@string/hint_race"
+        android:id="@+id/race"
+        android:layout_below="@id/level_label"
+        android:layout_toEndOf="@id/class_label"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:padding="16dp"
-        android:text="CON:"
-        android:id="@+id/constitution_label"
-        android:layout_below="@+id/experience"
-        android:layout_toEndOf="@+id/dexterity"/>
-
+        android:text="@string/class_label"
+        android:id="@+id/class_label"
+        android:layout_below="@id/race_label"
+        android:layout_alignStart="@id/race_label"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:padding="16dp"
-        android:text="18"
-        android:id="@+id/constitution"
-        android:layout_above="@+id/charisma"
-        android:layout_toEndOf="@+id/constitution_label"/>
-
-    <TextView
-        android:layout_width="wrap_content"
+        android:text="@string/hint_class"
+        android:id="@+id/character_class"
+        android:layout_below="@id/race"
+        android:layout_toEndOf="@id/class_label"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:padding="16dp"
-        android:text="INT:"
-        android:id="@+id/intelligence_label"
-        android:layout_below="@+id/strength_label"
-        android:layout_alignStart="@+id/strength_label"/>
+        android:id="@+id/attribute_layout"
+        android:layout_gravity="center_horizontal"
+        android:layout_below="@id/class_label">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:padding="16dp"
-        android:text="18"
-        android:id="@+id/intelligence"
-        android:layout_below="@+id/strength_label"
-        android:layout_alignStart="@+id/strength"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:padding="16dp"
+            android:text="@string/strength_label"
+            android:id="@+id/strength_label"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:padding="16dp"
-        android:text="WIS:"
-        android:id="@+id/wisdom_label"
-        android:layout_below="@+id/strength"
-        android:layout_alignStart="@+id/dexterity_label"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:padding="16dp"
+            android:text="@string/attribute_placeholder"
+            android:id="@+id/strength"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@id/strength_label"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:padding="16dp"
-        android:text="18"
-        android:id="@+id/wisdom"
-        android:layout_below="@+id/dexterity_label"
-        android:layout_alignStart="@+id/dexterity"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:padding="16dp"
+            android:text="@string/dexterity_label"
+            android:id="@+id/dexterity_label"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@id/strength"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:padding="16dp"
-        android:text="CHA:"
-        android:id="@+id/charisma_label"
-        android:layout_below="@+id/dexterity"
-        android:layout_alignStart="@+id/constitution_label"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:padding="16dp"
+            android:text="@string/attribute_placeholder"
+            android:id="@+id/dexterity"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@id/dexterity_label"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:padding="16dp"
-        android:text="18"
-        android:id="@+id/charisma"
-        android:layout_below="@+id/constitution_label"
-        android:layout_alignStart="@+id/constitution"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:padding="16dp"
+            android:text="@string/constitution_label"
+            android:id="@+id/constitution_label"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@id/dexterity"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:padding="16dp"
+            android:text="@string/attribute_placeholder"
+            android:id="@+id/constitution"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@id/constitution_label"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:padding="16dp"
+            android:text="@string/intelligence_label"
+            android:id="@+id/intelligence_label"
+            android:layout_below="@id/strength_label"
+            android:layout_alignParentStart="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:padding="16dp"
+            android:text="@string/attribute_placeholder"
+            android:id="@+id/intelligence"
+            android:layout_below="@id/strength"
+            android:layout_alignStart="@id/strength"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:padding="16dp"
+            android:text="@string/wisdom_label"
+            android:id="@+id/wisdom_label"
+            android:layout_below="@id/dexterity_label"
+            android:layout_alignStart="@id/dexterity_label"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:padding="16dp"
+            android:text="@string/attribute_placeholder"
+            android:id="@+id/wisdom"
+            android:layout_below="@id/dexterity"
+            android:layout_alignStart="@id/dexterity"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:padding="16dp"
+            android:text="@string/charisma_label"
+            android:id="@+id/charisma_label"
+            android:layout_below="@id/constitution_label"
+            android:layout_alignStart="@id/constitution_label"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:padding="16dp"
+            android:text="@string/attribute_placeholder"
+            android:id="@+id/charisma"
+            android:layout_below="@id/constitution"
+            android:layout_alignStart="@id/constitution"/>
+    </RelativeLayout>
+
+
 
 </RelativeLayout>

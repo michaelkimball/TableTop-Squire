@@ -5,11 +5,18 @@
     <string name="prompt_email">Email</string>
     <string name="prompt_username">Username</string>
     <string name="prompt_password">Password</string>
+    <string name="prompt_password_match">Re-Enter Password</string>
     <string name="prompt_name">Name</string>
     <string name="prompt_race">Race</string>
     <string name="prompt_class">Class</string>
     <string name="action_sign_in">Sign in</string>
+    <string name="action_register">Register</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_roll">Roll</string>
     <string name="hint_register">Don\'t have an account?</string>
+    <string name="hint_name">Joeicus Schmoetian</string>
+    <string name="hint_class">Supreme Programmer</string>
+    <string name="hint_race">Coding Monkey</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
@@ -18,15 +25,28 @@
 
     <string name="title_character_list">Characters</string>
     <string name="title_character_detail">Character Detail</string>
+    <string name="title_create_new_character">Create New Character</string>
+    <string name="title_add_existing_character">Add Existing Character</string>
 
     <string name="title_activity_user_register">UserRegisterActivity</string>
-    <string name="action_settings">Settings</string>
-    <string name="prompt_password_match">Re-Enter Password</string>
-    <string name="action_register">Register</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="user_name">User Name</string>
     <string name="title_activity_game_room">GameRoom</string>
     <string name="splash_welcome">Welcome to Table Top Squire</string>
+    <string name="user_name">User Name</string>
     <string name="game_room_create">Create Game</string>
     <string name="game_room_join">Join Room</string>
+
+    <!-- character label Strings -->
+    <string name="strength_label">STR:</string>
+    <string name="dexterity_label">DEX:</string>
+    <string name="constitution_label">CON:</string>
+    <string name="intelligence_label">INT:</string>
+    <string name="wisdom_label">WIS:</string>
+    <string name="charisma_label">CHA:</string>
+    <string name="attribute_placeholder">-1</string>
+    <string name="level_label">Level:</string>
+    <string name="experience_label">EXP:</string>
+    <string name="class_label">Class:</string>
+    <string name="race_label">Race:</string>
+    <string name="name_label">Name:</string>
 </resources>
