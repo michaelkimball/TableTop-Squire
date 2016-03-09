@@ -46,5 +46,12 @@
             android:id="@+id/btn_character"
             android:layout_gravity="center_horizontal"
         />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Create Character"
+            android:id="@+id/btn_create_character"
+            android:layout_gravity="center_horizontal"/>
     </LinearLayout>
 </RelativeLayout>

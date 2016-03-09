@@ -12,6 +12,7 @@
     <string name="action_sign_in">Sign in</string>
     <string name="action_register">Register</string>
     <string name="action_settings">Settings</string>
+    <string name="action_save">Save</string>
     <string name="action_roll">Roll</string>
     <string name="hint_register">Don\'t have an account?</string>
     <string name="hint_name">Joeicus Schmoetian</string>

@@ -27,8 +27,9 @@
         <activity
             android:name=".GameRoom"
             android:label="@string/title_activity_game_room" />
-        <activity android:name=".WelcomeActivity"></activity>
-        <activity android:name=".CharacterActivity"/>
+        <activity android:name=".WelcomeActivity"/>
+        <activity android:name=".ViewCharacterActivity"/>
+        <activity android:name=".CreateCharacterActivity"/>
 
     </application>
 

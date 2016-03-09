@@ -242,7 +242,7 @@ public class TableTopRestClientUser {
      * server for processing.
      * @param character - Character to be added to users roster.
      */
-    public void postCharacters(Character character){
+    public void postCharacters(Character character, final Handler.Callback callback){
         RequestParams params = new RequestParams();
 
         Context context = getContext();
@@ -260,6 +260,7 @@ public class TableTopRestClientUser {
         params.add(TableTopKeys.KEY_EXPERIENCE, String.valueOf(character.getExperience()));
 
         client.post("characters", params, new JsonHttpResponseHandler() {
+            Message message = new Message();
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
@@ -271,6 +272,8 @@ public class TableTopRestClientUser {
                         Log.e(TAG + "postCharacters", "header: " + header.getValue());
                     }
                 }
+                message.what = TableTopRestClientUser.SUCCESS_MESSAGE;
+                callback.handleMessage(message);
             }
 
             @Override
@@ -280,6 +283,8 @@ public class TableTopRestClientUser {
                 for (Header header : headers) {
                     Log.e(TAG + "postCharacters", "header: " + header.getValue());
                 }
+                message.what = TableTopRestClientUser.FAILURE_MESSAGE;
+                callback.handleMessage(message);
             }
         });
     }

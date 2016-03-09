@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 /**
  * Created by michael on 2/29/16.
  */
-public class CharacterActivity extends SingleFragmentActivity{
+public class ViewCharacterActivity extends SingleFragmentActivity{
     @Override
     protected Fragment createFragment() {
         String id = (String)getIntent().getExtras().get(ViewCharacterFragment.CHARACTER_KEY);
