@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import edu.uwf.tabletopgroup.models.User;
 import edu.uwf.tabletopgroup.rest.TableTopRestClientUser;
 
 /**
@@ -51,13 +52,14 @@ public class RegisterFragment extends Fragment {
     }
     private void register(){
         String password = passwordET.getText().toString();
-        String email = emailET.getText().toString();
+        final String email = emailET.getText().toString();
         String username = usernameET.getText().toString();
         if(passwordsAreEqual(password) && hasEmail(email) && hasUsername(username)){
             client.postUsers(username, email, password, new Handler.Callback() {
                 @Override
                 public boolean handleMessage(Message msg) {
                     if(msg.what == TableTopRestClientUser.SUCCESS_MESSAGE){
+                        User.setEmail(email);
                         Intent i = new Intent(getContext(), WelcomeActivity.class);
                         startActivity(i);
                     }else{

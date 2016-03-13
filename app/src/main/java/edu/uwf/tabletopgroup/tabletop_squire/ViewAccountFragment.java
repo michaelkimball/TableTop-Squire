@@ -69,6 +69,7 @@ public class ViewAccountFragment extends Fragment implements EmailFragment.EditE
                     public boolean handleMessage(Message msg) {
                         if(msg.what == TableTopRestClientUser.SUCCESS_MESSAGE){
                             Toast.makeText(getContext(), "Changes saved", Toast.LENGTH_SHORT).show();
+                            client.resetAuth();
                         }else{
                             Toast.makeText(getContext(), "Error saving changes", Toast.LENGTH_LONG).show();
                         }

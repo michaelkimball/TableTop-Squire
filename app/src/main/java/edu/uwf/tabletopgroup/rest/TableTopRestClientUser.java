@@ -136,8 +136,12 @@ public class TableTopRestClientUser {
     public void putUser(String email, String password, final Handler.Callback callback){
         if(email == null)
             email = User.getEmail();
+        else
+            User.setEmail(email);
         if(password == null)
             password = User.getPassword();
+        else
+            User.setPassword(password);
         RequestParams params = getUserRequestParams(User.getUsername(), email, password);
         client.put("user", params, new JsonHttpResponseHandler(){
             Message message = new Message();
@@ -194,6 +198,7 @@ public class TableTopRestClientUser {
                 try {
                     Log.d(TAG + "postUsers", response.toString(2));
                     User.setUser(username, password);
+                    client.setBasicAuth(User.getUsername(), User.getPassword());
                     message.what = TableTopRestClientUser.SUCCESS_MESSAGE;
                     callback.handleMessage(message);
                 } catch (JSONException e) {
@@ -214,6 +219,10 @@ public class TableTopRestClientUser {
                 callback.handleMessage(message);
             }
         });
+    }
+
+    public void resetAuth(){
+        client.setBasicAuth(User.getUsername(), User.getPassword());
     }
 
     /**
@@ -271,7 +280,8 @@ public class TableTopRestClientUser {
                         character.setExperience(experience);
                         characters.add(character);
                     }
-                    User.setCharacters(characters);
+                    if(characters.size() > 0)
+                        User.setCharacters(characters);
                     setSuccessMessage();
                 } catch (JSONException e) {
                     Log.e(TAG + "getCharacters",

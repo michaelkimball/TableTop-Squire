@@ -89,6 +89,8 @@ public class CreateCharacterFragment extends Fragment {
         Character character = new Character(nameET.getText().toString());
         character.setLevel(1);
         character.setExperience(0);
+        character.setCharacterClass(characterClassET.getText().toString());
+        character.setRace(raceET.getText().toString());
         character.setStrength(Integer.valueOf(strengthTV.getText().toString()));
         character.setDexterity(Integer.valueOf(dexterityTV.getText().toString()));
         character.setConstitution(Integer.valueOf(constitutionTV.getText().toString()));
