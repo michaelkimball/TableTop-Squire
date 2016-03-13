@@ -20,7 +20,7 @@ import edu.uwf.tabletopgroup.rest.TableTopRestClientUser;
 /**
  * Created by Brandon on 2/21/2016.
  */
-public class ViewAccountFragment extends Fragment implements EmailFragment.EditEmailDialogListener {
+public class ViewAccountFragment extends Fragment implements EmailFragment.EditEmailDialogListener, PasswordFragment.EditPasswordDialogListener {
 
     public static final String TAG = "ViewAccountFragment";
     private EditText usernameET;
@@ -28,6 +28,8 @@ public class ViewAccountFragment extends Fragment implements EmailFragment.EditE
     private Button passwordChangeBT;
     private Button saveChangesBT;
     private TableTopRestClientUser client;
+    private String email;
+    private String password;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,7 +64,7 @@ public class ViewAccountFragment extends Fragment implements EmailFragment.EditE
         saveChangesBT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                client.putUser(new Handler.Callback(){
+                client.putUser(email, password, new Handler.Callback(){
                     @Override
                     public boolean handleMessage(Message msg) {
                         if(msg.what == TableTopRestClientUser.SUCCESS_MESSAGE){
@@ -96,6 +98,11 @@ public class ViewAccountFragment extends Fragment implements EmailFragment.EditE
     @Override
     public void onFinishEmailDialog(String inputText) {
         emailET.setText(inputText);
-        User.setEmail(inputText);
+        email = inputText;
+    }
+
+    @Override
+    public void onFinishPasswordDialog(String inputText) {
+        password = inputText;
     }
 }

@@ -133,8 +133,12 @@ public class TableTopRestClientUser {
      * @param callback the method called on completion
      */
 
-    public void putUser(final Handler.Callback callback){
-        RequestParams params = getUserRequestParams(User.getUsername(), User.getEmail(), User.getPassword());
+    public void putUser(String email, String password, final Handler.Callback callback){
+        if(email == null)
+            email = User.getEmail();
+        if(password == null)
+            password = User.getPassword();
+        RequestParams params = getUserRequestParams(User.getUsername(), email, password);
         client.put("user", params, new JsonHttpResponseHandler(){
             Message message = new Message();
 

@@ -25,6 +25,10 @@ public class PasswordFragment extends DialogFragment implements TextView.OnEdito
     private EditText confirmNewPasswordET;
     private TableTopRestClientUser client;
 
+    public interface EditPasswordDialogListener {
+        void onFinishPasswordDialog(String inputText);
+    }
+
     public PasswordFragment(){
 
     }
@@ -56,6 +60,8 @@ public class PasswordFragment extends DialogFragment implements TextView.OnEdito
             String passwordMatch = confirmNewPasswordET.getText().toString();
             // Return input text to activity
             changePassword(password, passwordMatch);
+            EditPasswordDialogListener fragment = (EditPasswordDialogListener) getTargetFragment();
+            fragment.onFinishPasswordDialog(newPasswordET.getText().toString());
             this.dismiss();
             return true;
         }
@@ -65,7 +71,7 @@ public class PasswordFragment extends DialogFragment implements TextView.OnEdito
     private void changePassword(String password, String passwordMatch){
         if(passwordsAreEqual(password, passwordMatch)){
             try {
-                User.setPassword(password);
+
                 Toast.makeText(getContext(), "Your password has been changed.", Toast.LENGTH_SHORT).show();
             }catch(Exception e){
                 Log.e(TAG, "changePassword: ", e);
