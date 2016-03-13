@@ -20,7 +20,7 @@ import edu.uwf.tabletopgroup.models.User;
  * Used to perform specific HTTP requests
  * to the TableTop backend
  * @author Michael Kimball
- * TODO: Add put and delete requests for characters and users
+ * TODO: Add delete requests for characters and users
  */
 public class TableTopRestClientUser {
 
@@ -128,6 +128,11 @@ public class TableTopRestClientUser {
         });
     }
 
+    /**
+     * Method for changing user's data
+     * @param callback the method called on completion
+     */
+
     public void putUser(final Handler.Callback callback){
         RequestParams params = getUserRequestParams(User.getUsername(), User.getEmail(), User.getPassword());
         client.put("user", params, new JsonHttpResponseHandler(){
@@ -148,9 +153,9 @@ public class TableTopRestClientUser {
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 Log.e(TAG + "putUser",
-                        String.format("onFailure(%d, %s, %s", statusCode, throwable, errorResponse), throwable);
+                        String.format("onFailure(%d, %s, %s", statusCode, throwable, responseString), throwable);
                 for (Header header : headers)
                     Log.e(TAG + "putUser", "header: " + header.getValue());
                 message.what = TableTopRestClientUser.FAILURE_MESSAGE;
@@ -197,6 +202,13 @@ public class TableTopRestClientUser {
         });
     }
 
+    /**
+     * Creates a RequestParams object for a user
+     * @param username the current user's username
+     * @param email the current user's email
+     * @param password the current user's password
+     * @return RequestParams
+     */
     @NonNull
     private RequestParams getUserRequestParams(String username, String email, String password) {
         RequestParams params = new RequestParams();
@@ -353,6 +365,13 @@ public class TableTopRestClientUser {
             }
         });
     }
+
+    /**
+     * Creates a RequestParams from Character object
+     * @param character Character object that method
+     *                  extracts data from
+     * @return RequestParams
+     */
 
     @NonNull
     private RequestParams getCharacterRequestParams(Character character) {

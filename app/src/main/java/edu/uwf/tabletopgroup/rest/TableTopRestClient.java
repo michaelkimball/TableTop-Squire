@@ -10,14 +10,14 @@ import cz.msebera.android.httpclient.protocol.HTTP;
  * This handles the post and get requests
  * in an abstract manner.
  * @author Michael Kimball
- * TODO: Add put and delete requests
+ * TODO: Add delete requests
  */
 public class TableTopRestClient  {
 
     private static Context application;
     private static PersistentCookieStore cookieStore;
     private static AsyncHttpClient client;
-    private static final String BASE_URL = "http://192.168.0.21:3000/api/";
+    private static final String BASE_URL = "http://10.0.2.2:3000/api/";
 
     /**
      * Create HTTP client specific to TT backend
