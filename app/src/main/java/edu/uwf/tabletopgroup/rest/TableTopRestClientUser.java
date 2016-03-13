@@ -85,26 +85,22 @@ public class TableTopRestClientUser {
      * @throws JSONException - is thrown if access is
      * unauthorized
      */
-    public void getUser() throws JSONException {
+    public void getUser(final Handler.Callback callback) throws JSONException {
         client.setBasicAuth(User.getUsername(), User.getPassword());
         client.get("user", null, new JsonHttpResponseHandler() {
+            Message message = new Message();
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
                     Log.d(TAG + "getUser", response.toString(2));
+                    User.setEmail(response.getString(TableTopKeys.KEY_EMAIL));
+                    message.what = TableTopRestClientUser.SUCCESS_MESSAGE;
+                    callback.handleMessage(message);
                 } catch (JSONException e) {
                     Log.e(TAG + "getUser",
                             String.format("JSONObject onSuccess(%d, %s, %s)", statusCode, headers, response), e);
-                }
-            }
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray array) {
-                try {
-                    Log.d(TAG + "getUser", array.toString(2));
-                } catch (JSONException e) {
-                    Log.e(TAG + "getUser",
-                            String.format("JSONArray onSuccess(%d, %s, %s)", statusCode, headers, array), e);
+                    message.what = TableTopRestClientUser.FAILURE_MESSAGE;
+                    callback.handleMessage(message);
                 }
             }
 
@@ -115,6 +111,8 @@ public class TableTopRestClientUser {
                                 statusCode, throwable, errorResponse), throwable);
                 for (Header header : headers)
                     Log.e(TAG + "getUser", "header: " + header.getValue());
+                message.what = TableTopRestClientUser.FAILURE_MESSAGE;
+                callback.handleMessage(message);
             }
 
             @Override
@@ -123,6 +121,8 @@ public class TableTopRestClientUser {
                         String.format("String onFailure(%d, %s, %s)", statusCode, throwable, responseString), throwable);
                 for (Header header : headers)
                     Log.e(TAG + "getUser", "header: " + header.getValue());
+                message.what = TableTopRestClientUser.FAILURE_MESSAGE;
+                callback.handleMessage(message);
 
             }
         });

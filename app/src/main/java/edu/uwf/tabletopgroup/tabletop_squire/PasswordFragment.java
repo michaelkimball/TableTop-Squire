@@ -71,7 +71,6 @@ public class PasswordFragment extends DialogFragment implements TextView.OnEdito
     private void changePassword(String password, String passwordMatch){
         if(passwordsAreEqual(password, passwordMatch)){
             try {
-
                 Toast.makeText(getContext(), "Your password has been changed.", Toast.LENGTH_SHORT).show();
             }catch(Exception e){
                 Log.e(TAG, "changePassword: ", e);

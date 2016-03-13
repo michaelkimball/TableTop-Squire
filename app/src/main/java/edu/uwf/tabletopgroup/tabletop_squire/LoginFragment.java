@@ -67,7 +67,7 @@ public class LoginFragment extends Fragment {
         }
         try {
             User.setUser(email, password);
-            client.getCharacters(new Handler.Callback() {
+            client.getUser(new Handler.Callback() {
                 @Override
                 public boolean handleMessage(Message msg) {
                     if(msg.what == TableTopRestClientUser.SUCCESS_MESSAGE){
@@ -81,7 +81,7 @@ public class LoginFragment extends Fragment {
             });
         }catch(Exception e){
             Log.e(TAG, "startLogin: ", e);
-            Toast.makeText(getActivity(), "Error getting characters!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Error getting user!", Toast.LENGTH_SHORT).show();
         }
     }
     private void startRegister(){

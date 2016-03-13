@@ -71,7 +71,6 @@ public class EmailFragment extends DialogFragment implements TextView.OnEditorAc
             return;
         }
         try {
-            User.setEmail(email);
             Toast.makeText(getActivity(), "Your email has been changed.", Toast.LENGTH_SHORT).show();
         }catch(Exception e){
             Log.e(TAG, "changeEmail: ", e);
