@@ -161,6 +161,16 @@ public class TableTopRestClientUser {
                 message.what = TableTopRestClientUser.FAILURE_MESSAGE;
                 callback.handleMessage(message);
             }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                Log.e(TAG + "putUser",
+                        String.format("onFailure(%d, %s, %s", statusCode, throwable, errorResponse), throwable);
+                for (Header header : headers)
+                    Log.e(TAG + "putUser", "header: " + header.getValue());
+                message.what = TableTopRestClientUser.FAILURE_MESSAGE;
+                callback.handleMessage(message);
+            }
         });
     }
 

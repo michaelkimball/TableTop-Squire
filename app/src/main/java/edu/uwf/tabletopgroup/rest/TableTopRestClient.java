@@ -17,7 +17,7 @@ public class TableTopRestClient  {
     private static Context application;
     private static PersistentCookieStore cookieStore;
     private static AsyncHttpClient client;
-    private static final String BASE_URL = "http://10.0.2.2:3000/api/";
+    private static final String BASE_URL = "http://192.168.0.21:3000/api/";
 
     /**
      * Create HTTP client specific to TT backend
