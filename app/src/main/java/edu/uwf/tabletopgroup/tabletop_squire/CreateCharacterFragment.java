@@ -1,5 +1,6 @@
 package edu.uwf.tabletopgroup.tabletop_squire;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -86,7 +87,7 @@ public class CreateCharacterFragment extends Fragment {
     private void saveCharacter(){
         if(!validation())
             return;
-        Character character = new Character(nameET.getText().toString());
+        @SuppressLint("UseValueOf") Character character = new Character(nameET.getText().toString());
         character.setLevel(1);
         character.setExperience(0);
         character.setCharacterClass(characterClassET.getText().toString());
