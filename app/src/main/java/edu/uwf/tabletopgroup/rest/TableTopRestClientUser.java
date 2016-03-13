@@ -3,6 +3,7 @@ package edu.uwf.tabletopgroup.rest;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import org.json.*;
@@ -65,7 +66,7 @@ public class TableTopRestClientUser {
 
     /**
      * Sets context reference
-     * @param application
+     * @param application context for the application
      */
     private void setContext(Context application){
         TableTopRestClientUser.application = application;
@@ -127,6 +128,37 @@ public class TableTopRestClientUser {
         });
     }
 
+    public void putUser(final Handler.Callback callback){
+        RequestParams params = getUserRequestParams(User.getUsername(), User.getEmail(), User.getPassword());
+        client.put("user", params, new JsonHttpResponseHandler(){
+            Message message = new Message();
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    Log.d(TAG + "putUser", response.toString(2));
+                    message.what = TableTopRestClientUser.SUCCESS_MESSAGE;
+                    callback.handleMessage(message);
+                } catch (JSONException e) {
+                    Log.e(TAG + "putUser",
+                            String.format("onSuccess(%d, %s", statusCode, response), e);
+                    for (Header header : headers)
+                        Log.e(TAG + "putUser", "header: " + header.getValue());
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                Log.e(TAG + "putUser",
+                        String.format("onFailure(%d, %s, %s", statusCode, throwable, errorResponse), throwable);
+                for (Header header : headers)
+                    Log.e(TAG + "putUser", "header: " + header.getValue());
+                message.what = TableTopRestClientUser.FAILURE_MESSAGE;
+                callback.handleMessage(message);
+            }
+        });
+    }
+
     /**
      * Creates user
      * @param username - username of the user
@@ -134,10 +166,7 @@ public class TableTopRestClientUser {
      * @param password - password of the user to be hashed
      */
     public void postUsers(final String username, String email, final String password, final Handler.Callback callback){
-        RequestParams params = new RequestParams();
-        params.put(TableTopKeys.KEY_USERNAME, username);
-        params.put(TableTopKeys.KEY_EMAIL, email);
-        params.put(TableTopKeys.KEY_PASSWORD, password);
+        RequestParams params = getUserRequestParams(username, email, password);
         client.post("users", params, new JsonHttpResponseHandler() {
             Message message = new Message();
 
@@ -168,6 +197,15 @@ public class TableTopRestClientUser {
         });
     }
 
+    @NonNull
+    private RequestParams getUserRequestParams(String username, String email, String password) {
+        RequestParams params = new RequestParams();
+        params.put(TableTopKeys.KEY_USERNAME, username);
+        params.put(TableTopKeys.KEY_EMAIL, email);
+        params.put(TableTopKeys.KEY_PASSWORD, password);
+        return params;
+    }
+
     /**
      * Grabs characters from the database
 
@@ -187,8 +225,8 @@ public class TableTopRestClientUser {
                     Log.d(TAG + "getCharacters", array.toString(2));
                     Log.d(TAG + "getCharacters", "JSONArray response");
                     ArrayList<Character> characters = new ArrayList<Character>();
-                    for(int i = 0; i < array.length(); i++){
-                        JSONObject jsonObject = (JSONObject)array.get(i);
+                    for (int i = 0; i < array.length(); i++) {
+                        JSONObject jsonObject = (JSONObject) array.get(i);
                         String id = jsonObject.getString(TableTopKeys.KEY_ID);
                         String name = jsonObject.getString(TableTopKeys.KEY_NAME);
                         String race = jsonObject.getString(TableTopKeys.KEY_RACE);
@@ -243,24 +281,11 @@ public class TableTopRestClientUser {
      * @param character - Character to be added to users roster.
      */
     public void postCharacters(Character character, final Handler.Callback callback){
-        RequestParams params = new RequestParams();
-
-        Context context = getContext();
-
-        params.add(TableTopKeys.KEY_NAME, character.getName());
-        params.add(TableTopKeys.KEY_RACE, character.getRace());
-        params.add(TableTopKeys.KEY_CLASS, character.getCharacterClass());
-        params.add(TableTopKeys.KEY_STRENGTH, String.valueOf(character.getStrength()));
-        params.add(TableTopKeys.KEY_DEXTERITY, String.valueOf(character.getDexterity()));
-        params.add(TableTopKeys.KEY_CONSTITUTION, String.valueOf(character.getConstitution()));
-        params.add(TableTopKeys.KEY_INTELLIGENCE, String.valueOf(character.getIntelligence()));
-        params.add(TableTopKeys.KEY_WISDOM, String.valueOf(character.getWisdom()));
-        params.add(TableTopKeys.KEY_CHARISMA, String.valueOf(character.getCharisma()));
-        params.add(TableTopKeys.KEY_LEVEL, String.valueOf(character.getLevel()));
-        params.add(TableTopKeys.KEY_EXPERIENCE, String.valueOf(character.getExperience()));
+        RequestParams params = getCharacterRequestParams(character);
 
         client.post("characters", params, new JsonHttpResponseHandler() {
             Message message = new Message();
+
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
@@ -277,8 +302,8 @@ public class TableTopRestClientUser {
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.e(TAG + "postCharacters", String.format("onFailure(%d, %s, %s", statusCode, throwable, errorResponse), throwable);
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.e(TAG + "postCharacters", String.format("onFailure(%d, %s, %s", statusCode, throwable, responseString), throwable);
 
                 for (Header header : headers) {
                     Log.e(TAG + "postCharacters", "header: " + header.getValue());
@@ -287,6 +312,63 @@ public class TableTopRestClientUser {
                 callback.handleMessage(message);
             }
         });
+    }
+
+    /**
+     * A method for editing a character in the database
+     * @param character the character with all of its
+     *                  modified data.
+     * @param callback The notifier of success or failure
+     */
+
+    public void putCharacter(Character character, final Handler.Callback callback){
+        RequestParams params = getCharacterRequestParams(character);
+        params.add(TableTopKeys.KEY_ID, character.getId());
+        client.put("character", params, new JsonHttpResponseHandler(){
+            Message message = new Message();
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    Log.d(TAG + "putCharacter", response.toString(2)); // what is 2?
+                } catch (JSONException e) {
+                    Log.e(TAG + "putCharacter", String.format("onSuccess(%d, %s", statusCode, response), e);
+
+                    for (Header header : headers) {
+                        Log.e(TAG + "putCharacter", "header: " + header.getValue());
+                    }
+                }
+                message.what = TableTopRestClientUser.SUCCESS_MESSAGE;
+                callback.handleMessage(message);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.e(TAG + "putCharacter", String.format("onFailure(%d, %s, %s", statusCode, throwable, responseString), throwable);
+
+                for (Header header : headers) {
+                    Log.e(TAG + "putCharacter", "header: " + header.getValue());
+                }
+                message.what = TableTopRestClientUser.FAILURE_MESSAGE;
+                callback.handleMessage(message);
+            }
+        });
+    }
+
+    @NonNull
+    private RequestParams getCharacterRequestParams(Character character) {
+        RequestParams params = new RequestParams();
+        params.add(TableTopKeys.KEY_NAME, character.getName());
+        params.add(TableTopKeys.KEY_RACE, character.getRace());
+        params.add(TableTopKeys.KEY_CLASS, character.getCharacterClass());
+        params.add(TableTopKeys.KEY_STRENGTH, String.valueOf(character.getStrength()));
+        params.add(TableTopKeys.KEY_DEXTERITY, String.valueOf(character.getDexterity()));
+        params.add(TableTopKeys.KEY_CONSTITUTION, String.valueOf(character.getConstitution()));
+        params.add(TableTopKeys.KEY_INTELLIGENCE, String.valueOf(character.getIntelligence()));
+        params.add(TableTopKeys.KEY_WISDOM, String.valueOf(character.getWisdom()));
+        params.add(TableTopKeys.KEY_CHARISMA, String.valueOf(character.getCharisma()));
+        params.add(TableTopKeys.KEY_LEVEL, String.valueOf(character.getLevel()));
+        params.add(TableTopKeys.KEY_EXPERIENCE, String.valueOf(character.getExperience()));
+        return params;
     }
 
 }

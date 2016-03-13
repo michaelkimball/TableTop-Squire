@@ -62,6 +62,18 @@ public class TableTopRestClient  {
     }
 
     /**
+     * Perform a put request to TT backend
+     * @param url - route (users, characters, etc)
+     * @param params - data being passed for processing
+     * @param responseHandler - handle success or failure
+     */
+    public void put(String url, RequestParams params, AsyncHttpResponseHandler responseHandler){
+        client.addHeader("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
+        client.put(getAbsoluteUrl(url), params, responseHandler);
+        client.removeHeader(HTTP.CONTENT_TYPE);
+    }
+
+    /**
      * Appends given url to the base url
      * @param relativeUrl - partial route
      * @return The full URL
