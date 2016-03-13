@@ -50,6 +50,14 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="View Account"
+            android:id="@+id/btn_viewAccount"
+            android:onClick="btn_view_account_onClick"
+            android:layout_gravity="center_horizontal"
+            />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="Create Character"
             android:id="@+id/btn_create_character"
             android:layout_gravity="center_horizontal"/>
