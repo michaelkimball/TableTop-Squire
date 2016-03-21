@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".GameRoom"
+            android:name=".GameRoomActivity"
             android:label="@string/title_activity_game_room" />
         <activity android:name=".WelcomeActivity"/>
         <activity android:name=".ViewCharacterActivity"/>
