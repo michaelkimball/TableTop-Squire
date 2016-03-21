@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import edu.uwf.tabletopgroup.rest.TableTopRestClientUser;
@@ -19,6 +20,7 @@ import edu.uwf.tabletopgroup.rest.TableTopRestClientUser;
 /**
  * Created by michael on 2/17/16.
  */
+
 public class RegisterFragment extends Fragment {
     public static final String TAG = "RegisterFragment";
     private EditText usernameET;
@@ -27,6 +29,8 @@ public class RegisterFragment extends Fragment {
     private EditText passwordConfirmET;
     private Button registerBT;
     private TableTopRestClientUser client;
+    private TextView statusResult;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,6 +45,7 @@ public class RegisterFragment extends Fragment {
         passwordET = (EditText)v.findViewById(R.id.password);
         passwordConfirmET = (EditText)v.findViewById(R.id.password_match);
         registerBT = (Button)v.findViewById(R.id.email_register_button);
+        statusResult = (TextView)v.findViewById(R.id.status_result);
         registerBT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,18 +54,19 @@ public class RegisterFragment extends Fragment {
         });
         return v;
     }
-    private void register(){
+
+    public void register(){
         String password = passwordET.getText().toString();
         String email = emailET.getText().toString();
         String username = usernameET.getText().toString();
         if(passwordsAreEqual(password) && hasEmail(email) && hasUsername(username)){
-            client.postUsers(username, email, password, new Handler.Callback() {
+            TableTopRestClientUser.postUsers(username, email, password, new Handler.Callback() {
                 @Override
                 public boolean handleMessage(Message msg) {
-                    if(msg.what == TableTopRestClientUser.SUCCESS_MESSAGE){
+                    if (msg.what == TableTopRestClientUser.SUCCESS_MESSAGE) {
                         Intent i = new Intent(getContext(), WelcomeActivity.class);
                         startActivity(i);
-                    }else{
+                    } else {
                         Toast.makeText(getContext(), "Error creating user!", Toast.LENGTH_LONG).show();
                     }
                     return false;

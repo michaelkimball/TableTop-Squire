@@ -28,12 +28,15 @@ public class LoginFragment extends Fragment {
     private EditText passwordET;
     private Button loginBT;
     private Button registerBT;
+
     private TableTopRestClientUser client;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_login, container, false);
         try {
+
             client = TableTopRestClientUser.getClientUser(getActivity().getApplicationContext());
         }catch(Exception e){
             Toast.makeText(getActivity(), "Error connecting to database!", Toast.LENGTH_SHORT).show();
@@ -41,7 +44,7 @@ public class LoginFragment extends Fragment {
         usernameET = (EditText)v.findViewById(R.id.username);
         passwordET = (EditText)v.findViewById(R.id.password);
 
-        loginBT = (Button)v.findViewById(R.id.login);
+        loginBT = (Button)v.findViewById(R.id.btn_login);
         loginBT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,8 +59,10 @@ public class LoginFragment extends Fragment {
                 startRegister();
             }
         });
+
         return v;
     }
+
     private void startLogin(){
         String email = usernameET.getText().toString();
         String password = passwordET.getText().toString();
@@ -67,6 +72,7 @@ public class LoginFragment extends Fragment {
         }
         try {
             User.setUser(email, password);
+
             client.getCharacters(new Handler.Callback() {
                 @Override
                 public boolean handleMessage(Message msg) {
@@ -84,6 +90,7 @@ public class LoginFragment extends Fragment {
             Toast.makeText(getActivity(), "Error getting characters!", Toast.LENGTH_SHORT).show();
         }
     }
+
     private void startRegister(){
         Fragment newFragment = new RegisterFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();

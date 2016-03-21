@@ -59,7 +59,7 @@ public class TableTopRestClientUser {
      * Gets context reference
      * @return context reference
      */
-    public Context getContext(){
+    public static Context getContext(){
         return TableTopRestClientUser.application;
     }
 
@@ -84,7 +84,7 @@ public class TableTopRestClientUser {
      * @throws JSONException - is thrown if access is
      * unauthorized
      */
-    public void getUser() throws JSONException {
+    public static void getUser() throws JSONException {
         client.setBasicAuth(User.getUsername(), User.getPassword());
         client.get("user", null, new JsonHttpResponseHandler() {
             @Override
@@ -133,7 +133,7 @@ public class TableTopRestClientUser {
      * @param email - email of the user
      * @param password - password of the user to be hashed
      */
-    public void postUsers(final String username, String email, final String password, final Handler.Callback callback){
+    public static void postUsers(final String username, String email, final String password, final Handler.Callback callback){
         RequestParams params = new RequestParams();
         params.put(TableTopKeys.KEY_USERNAME, username);
         params.put(TableTopKeys.KEY_EMAIL, email);
@@ -176,7 +176,7 @@ public class TableTopRestClientUser {
      * @throws JSONException - If authorization fails
      * this exception will be thrown
      */
-    public void getCharacters(final Handler.Callback callback) throws JSONException {
+    public static void getCharacters(final Handler.Callback callback) throws JSONException {
         client.setBasicAuth(User.getUsername(), User.getPassword());
         client.get("characters", null, new JsonHttpResponseHandler() {
             Message message = new Message();
@@ -186,7 +186,7 @@ public class TableTopRestClientUser {
                 try {
                     Log.d(TAG + "getCharacters", array.toString(2));
                     Log.d(TAG + "getCharacters", "JSONArray response");
-                    ArrayList<Character> characters = new ArrayList<Character>();
+                    ArrayList<Character> characters = new ArrayList<>();
                     for(int i = 0; i < array.length(); i++){
                         JSONObject jsonObject = (JSONObject)array.get(i);
                         String id = jsonObject.getString(TableTopKeys.KEY_ID);
@@ -246,7 +246,6 @@ public class TableTopRestClientUser {
         RequestParams params = new RequestParams();
 
         Context context = getContext();
-
         params.add(TableTopKeys.KEY_NAME, character.getName());
         params.add(TableTopKeys.KEY_RACE, character.getRace());
         params.add(TableTopKeys.KEY_CLASS, character.getCharacterClass());
