@@ -9,7 +9,8 @@ import android.support.v4.app.Fragment;
 public class ViewCharacterActivity extends SingleFragmentActivity{
     @Override
     protected Fragment createFragment() {
-        String id = (String)getIntent().getExtras().get(ViewCharacterFragment.CHARACTER_KEY);
-        return ViewCharacterFragment.newInstance(id);
+//        String id = (String)getIntent().getExtras().get(ViewCharacterFragment.CHARACTER_KEY);
+//        return ViewCharacterFragment.newInstance(id);
+        return new CharacterListFragment();
     }
 }

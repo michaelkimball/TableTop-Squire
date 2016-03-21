@@ -14,7 +14,7 @@ public class User {
     private static String email;
     private static String password;
     private static String username;
-    private static List<Character> characters;
+    private static ArrayList<Character> characters;
 
     public static void setUser(String username, String pass)
     {
@@ -89,7 +89,7 @@ public class User {
      * Returns User characters
      * @return User characters
      */
-    public static List<Character> getCharacters(){
+    public static ArrayList<Character> getCharacters(){
         return User.characters;
     }
 
@@ -106,6 +106,10 @@ public class User {
             }
         }
         return temp;
+    }
+
+    public static Character getCharacter(int position){
+        return characters.get(position);
     }
 
 }
