@@ -17,7 +17,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".AuthActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,12 +26,22 @@
             </intent-filter>
         </activity>
         <activity
+            android:screenOrientation="landscape"
             android:name=".GameRoomActivity"
             android:label="@string/title_activity_game_room" />
-        <activity android:name=".WelcomeActivity"/>
-        <activity android:name=".ViewCharacterActivity"/>
-        <activity android:name=".CreateCharacterActivity"/>
-        <activity android:name=".ViewAccountActivity"/>
+        <activity
+            android:name=".WelcomeActivity"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".ViewCharacterActivity"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".CreateCharacterActivity"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:screenOrientation="landscape"
+            android:name=".ViewAccountActivity"
+            />
 
     </application>
 
