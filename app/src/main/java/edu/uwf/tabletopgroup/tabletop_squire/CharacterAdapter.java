@@ -2,6 +2,7 @@ package edu.uwf.tabletopgroup.tabletop_squire;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +27,6 @@ public class CharacterAdapter extends BaseAdapter implements View.OnClickListene
     private CharacterListFragment fragment;
     private ArrayList<Character> characters;
     private Character temp;
-    private int mPosition;
     private static LayoutInflater inflater;
 
     public CharacterAdapter(CharacterListFragment fragment, ArrayList<Character> characters){
@@ -56,6 +56,7 @@ public class CharacterAdapter extends BaseAdapter implements View.OnClickListene
         public TextView character_class;
         public TextView race;
         public TextView level;
+        public int position;
     }
 
     @Override
@@ -76,6 +77,7 @@ public class CharacterAdapter extends BaseAdapter implements View.OnClickListene
             holder.race =(TextView)vi.findViewById(R.id.race);
             holder.character_class = (TextView)vi.findViewById(R.id.character_class);
             holder.level = (TextView)vi.findViewById(R.id.level);
+            holder.position = position;
 
             /************  Set holder with LayoutInflater ************/
             vi.setTag( holder );
@@ -102,7 +104,6 @@ public class CharacterAdapter extends BaseAdapter implements View.OnClickListene
             holder.level.setText( String.valueOf(temp.getLevel()) );
 
             /******** Set Item Click Listener for LayoutInflater for each row *******/
-            mPosition = position;
             vi.setOnClickListener(this);
         }
         return vi;
@@ -110,13 +111,25 @@ public class CharacterAdapter extends BaseAdapter implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        String id = User.getCharacter(mPosition).getId();
+        ViewHolder holder = (ViewHolder)v.getTag();
+        String id = User.getCharacter(holder.position).getId();
         if(id == null)
             return;
         Fragment newFragment = ViewCharacterFragment.newInstance(id);
-        FragmentTransaction transaction = fragment.getFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, newFragment);
-        transaction.addToBackStack(null);
+        FragmentManager fm = fragment.getFragmentManager();
+        Fragment fragmentToRemove = fm.findFragmentByTag("character_details");
+        if(fragmentToRemove != null){
+            FragmentTransaction removalTransaction = fm.beginTransaction();
+            removalTransaction.remove(fragmentToRemove).commit();
+            fm.executePendingTransactions();
+        }
+        FragmentTransaction transaction = fm.beginTransaction();
+        boolean mDualPane = fragment.getActivity().findViewById(R.id.dual_pane)!=null;
+        if(!mDualPane)
+            transaction.replace(R.id.fragment_container, newFragment);
+        else {
+            transaction.add(R.id.details_container, newFragment, "character_details");
+        }
         transaction.commit();
     }
 }
