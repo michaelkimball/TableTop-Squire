@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
-import edu.uwf.tabletopgroup.tabletop_squire.R;
+import edu.uwf.tabletopgroup.R;
 
 /**
  * Created by qjrou on 2/11/2016.

@@ -3,6 +3,8 @@ package edu.uwf.tabletopgroup.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.uwf.tabletopgroup.rest.SocketService;
+
 /**
  * Models the single user object
  * @author Michael Kimball
@@ -15,7 +17,8 @@ public class User {
     private static String password;
     private static String username;
     private static ArrayList<Character> characters;
-
+    private static ArrayList<Invite> invites;
+    private static Game currentGame;
     public static void setUser(String username, String pass)
     {
         User.username = username;
@@ -93,10 +96,6 @@ public class User {
         return User.characters;
     }
 
-    public static void updateUser(){
-
-    }
-
     public static Character getCharacter(String id){
         Character temp = null;
         for(Character character : characters) {
@@ -112,4 +111,23 @@ public class User {
         return characters.get(position);
     }
 
+    public static void setInvites(ArrayList<Invite> invites){
+        User.invites = invites;
+    }
+
+    public static ArrayList<Invite> getInvites(){
+        return User.invites;
+    }
+
+    public static Invite getInvite(int position){
+        return invites.get(position);
+    }
+
+    public static Game getCurrentGame() {
+        return currentGame;
+    }
+
+    public static void setCurrentGame(Game currentGame) {
+        User.currentGame = currentGame;
+    }
 }

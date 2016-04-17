@@ -1,10 +1,12 @@
-package edu.uwf.tabletopgroup.tabletop_squire;
+package edu.uwf.tabletopgroup.tabletop_squire.view_character;
 
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+
+import edu.uwf.tabletopgroup.R;
 
 /**
  * Created by michael on 2/29/16.

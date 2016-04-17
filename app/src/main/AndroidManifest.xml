@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="edu.uwf.tabletopgroup.tabletop_squire">
+    package="edu.uwf.tabletopgroup">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".AuthActivity"
+            android:name=".tabletop_squire.authorization.AuthActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,12 +25,24 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".GameRoom"
+            android:name=".tabletop_squire.game_lobby.GameLobbyActivity"
             android:label="@string/title_activity_game_room" />
-        <activity android:name=".WelcomeActivity"/>
-        <activity android:name=".ViewCharacterActivity"/>
-        <activity android:name=".CreateCharacterActivity"/>
-        <activity android:name=".ViewAccountActivity"/>
+        <activity android:name=".tabletop_squire.WelcomeActivity"/>
+        <activity android:name=".tabletop_squire.view_character.ViewCharacterActivity"/>
+        <activity android:name=".tabletop_squire.create_character.CreateCharacterActivity"/>
+        <activity android:name=".tabletop_squire.view_account.ViewAccountActivity"/>
+        <activity android:name=".tabletop_squire.game_room.GameRoomActivity"/>
+        <service android:name=".rest.SocketService"
+            android:process=":socket">
+        </service>
+        <receiver android:name=".rest.SocketBroadcastReceiver">
+            <intent-filter android:priority="100000">
+                <action android:name="edu.uwf.tabletopgroup.MESSAGE_SENT"/>
+            </intent-filter>
+            <intent-filter android:priority="100000">
+                <action android:name="edu.uwf.tabletopgroup.GAME_CREATED"/>
+            </intent-filter>
+        </receiver>
 
     </application>
 

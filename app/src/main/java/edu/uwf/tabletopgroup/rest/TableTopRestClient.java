@@ -17,7 +17,8 @@ public class TableTopRestClient  {
     private static Context application;
     private static PersistentCookieStore cookieStore;
     private static AsyncHttpClient client;
-    private static final String BASE_URL = "http://10.0.2.2:3000/api/";
+    public static final String BASE_URL = "http://10.0.2.2:3000/";
+    private static final String API_URL = BASE_URL + "api/";
 
     /**
      * Create HTTP client specific to TT backend
@@ -79,6 +80,6 @@ public class TableTopRestClient  {
      * @return The full URL
      */
     private String getAbsoluteUrl(String relativeUrl) {
-        return BASE_URL + relativeUrl;
+        return API_URL + relativeUrl;
     }
 }

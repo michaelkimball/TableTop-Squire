@@ -12,7 +12,14 @@ import android.widget.Button;
 import org.json.JSONException;
 
 import edu.uwf.tabletopgroup.models.User;
+import edu.uwf.tabletopgroup.rest.SocketService;
 import edu.uwf.tabletopgroup.rest.TableTopRestClientUser;
+import edu.uwf.tabletopgroup.tabletop_squire.create_character.CreateCharacterActivity;
+import edu.uwf.tabletopgroup.tabletop_squire.game_lobby.GameLobbyActivity;
+import edu.uwf.tabletopgroup.tabletop_squire.view_account.ViewAccountActivity;
+import edu.uwf.tabletopgroup.tabletop_squire.view_character.ViewCharacterActivity;
+import edu.uwf.tabletopgroup.tabletop_squire.view_character.ViewCharacterFragment;
+import edu.uwf.tabletopgroup.R;
 
 public class WelcomeActivity extends Activity {
     private static final String TAG = "WelcomeActivity";
@@ -42,6 +49,18 @@ public class WelcomeActivity extends Activity {
                 startCreateCharacter();
             }
         });
+        Intent i = new Intent(getApplicationContext(), SocketService.class);
+        startService(i);
+        try {
+            client.getCharacters(new Handler.Callback() {
+                @Override
+                public boolean handleMessage(Message msg) {
+                    return false;
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void startViewCharacter(){
@@ -74,9 +93,13 @@ public class WelcomeActivity extends Activity {
     }
 
     public void btn_create_game_room_onClick(View view) {
+        Intent intent = new Intent(this, GameLobbyActivity.class);
+        startActivity(intent);
     }
 
     public void btn_join_game_room_onClick(View view) {
+        JoinGameByIdDialog dialog = new JoinGameByIdDialog();
+        dialog.show(getFragmentManager(), "join_game");
     }
 
     public void btn_view_account_onClick(View view){

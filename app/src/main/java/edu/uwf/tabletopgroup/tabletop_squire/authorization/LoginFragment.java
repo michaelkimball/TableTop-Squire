@@ -1,4 +1,4 @@
-package edu.uwf.tabletopgroup.tabletop_squire;
+package edu.uwf.tabletopgroup.tabletop_squire.authorization;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import edu.uwf.tabletopgroup.models.User;
 import edu.uwf.tabletopgroup.rest.TableTopRestClientUser;
+import edu.uwf.tabletopgroup.R;
+import edu.uwf.tabletopgroup.tabletop_squire.WelcomeActivity;
 
 /**
  * Created by michael on 2/17/16.

@@ -1,4 +1,4 @@
-package edu.uwf.tabletopgroup.tabletop_squire;
+package edu.uwf.tabletopgroup.tabletop_squire.view_character;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import edu.uwf.tabletopgroup.models.User;
+import edu.uwf.tabletopgroup.R;
 
 /**
  * TableTopSquire

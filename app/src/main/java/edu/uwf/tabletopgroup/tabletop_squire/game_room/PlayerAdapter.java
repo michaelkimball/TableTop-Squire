@@ -1,4 +1,4 @@
-package edu.uwf.tabletopgroup.tabletop_squire;
+package edu.uwf.tabletopgroup.tabletop_squire.game_room;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
@@ -9,35 +9,38 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import edu.uwf.tabletopgroup.models.Character;
-import edu.uwf.tabletopgroup.models.User;
 
 import java.util.ArrayList;
 
+import edu.uwf.tabletopgroup.R;
+import edu.uwf.tabletopgroup.models.*;
+import edu.uwf.tabletopgroup.models.Character;
+import edu.uwf.tabletopgroup.tabletop_squire.view_character.ViewCharacterFragment;
+
 /**
  * TableTopSquire
- * CharacterAdapter.java
+ * PlayerAdapter.java
  *
  * TODO: Write Description
  *
  * Created By Michael Kimball
- *         On 3/15/16
+ * On 4/16/16
  */
-public class CharacterAdapter extends BaseAdapter implements View.OnClickListener{
-    private CharacterListFragment fragment;
-    private ArrayList<Character> characters;
-    private Character temp;
+public class PlayerAdapter extends BaseAdapter implements View.OnClickListener {
+    private PlayerListFragment fragment;
+    private ArrayList<Player> players;
+    private Player temp;
     private static LayoutInflater inflater;
 
-    public CharacterAdapter(CharacterListFragment fragment, ArrayList<Character> characters){
+    public PlayerAdapter(PlayerListFragment fragment, ArrayList<Player> players){
         this.fragment = fragment;
-        this.characters = characters;
+        this.players = players;
         inflater = (LayoutInflater)fragment.getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public int getCount() {
-        return characters.size();
+        return players.size();
     }
 
     @Override
@@ -52,10 +55,9 @@ public class CharacterAdapter extends BaseAdapter implements View.OnClickListene
 
     public static class ViewHolder{
 
-        public TextView name;
-        public TextView character_class;
-        public TextView race;
-        public TextView level;
+        public TextView playerName;
+        public TextView characterName;
+        public Player player;
         public int position;
     }
 
@@ -68,15 +70,13 @@ public class CharacterAdapter extends BaseAdapter implements View.OnClickListene
         if(convertView==null){
 
             /****** Inflate row_character.xml file for each row ( Defined below ) *******/
-            vi = inflater.inflate(R.layout.row_character, null);
+            vi = inflater.inflate(R.layout.row_player, null);
 
             /****** View Holder Object to contain row_character.xml file elements ******/
 
             holder = new ViewHolder();
-            holder.name = (TextView) vi.findViewById(R.id.name);
-            holder.race =(TextView)vi.findViewById(R.id.race);
-            holder.character_class = (TextView)vi.findViewById(R.id.character_class);
-            holder.level = (TextView)vi.findViewById(R.id.level);
+            holder.playerName = (TextView) vi.findViewById(R.id.player_name);
+            holder.characterName =(TextView)vi.findViewById(R.id.character_name);
             holder.position = position;
 
             /************  Set holder with LayoutInflater ************/
@@ -85,23 +85,22 @@ public class CharacterAdapter extends BaseAdapter implements View.OnClickListene
         else
             holder=(ViewHolder)vi.getTag();
 
-        if(characters.size()<=0)
+        if(players.size()<=0)
         {
-            holder.name.setText("No Data");
+            holder.playerName.setText("No Data");
 
         }
         else
         {
             /***** Get each Model object from Arraylist ********/
             temp = null;
-            temp = ( Character ) characters.get( position );
+            temp = ( Player ) players.get( position );
 
             /************  Set Model values in Holder elements ***********/
 
-            holder.name.setText( temp.getName() );
-            holder.race.setText( temp.getRace() );
-            holder.character_class.setText( temp.getCharacterClass() );
-            holder.level.setText( String.valueOf(temp.getLevel()) );
+            holder.player = new Player(temp);
+            holder.playerName.setText(temp.getName());
+            holder.characterName.setText( temp.getCharacter().getName() );
 
             /******** Set Item Click Listener for LayoutInflater for each row *******/
             vi.setOnClickListener(this);
@@ -115,9 +114,9 @@ public class CharacterAdapter extends BaseAdapter implements View.OnClickListene
         String id = User.getCharacter(holder.position).getId();
         if(id == null)
             return;
-        Fragment newFragment = ViewCharacterFragment.newInstance(id);
+        Fragment newFragment = ViewCharacterFragment.newInstance(holder.player.getCharacter());
         FragmentManager fm = fragment.getFragmentManager();
-        Fragment fragmentToRemove = fm.findFragmentByTag("character_details");
+        Fragment fragmentToRemove = fm.findFragmentByTag("player_details");
         if(fragmentToRemove != null){
             FragmentTransaction removalTransaction = fm.beginTransaction();
             removalTransaction.remove(fragmentToRemove).commit();
@@ -128,8 +127,7 @@ public class CharacterAdapter extends BaseAdapter implements View.OnClickListene
         if(!mDualPane)
             transaction.replace(R.id.fragment_container, newFragment);
         else {
-            transaction.add(R.id.details_container, newFragment, "character_details");
+            transaction.replace(R.id.details_container, newFragment, "player_details");
         }
         transaction.commit();
-    }
-}
+    }}

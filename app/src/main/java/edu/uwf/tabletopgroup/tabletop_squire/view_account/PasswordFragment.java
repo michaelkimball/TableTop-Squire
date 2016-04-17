@@ -1,4 +1,4 @@
-package edu.uwf.tabletopgroup.tabletop_squire;
+package edu.uwf.tabletopgroup.tabletop_squire.view_account;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import edu.uwf.tabletopgroup.models.User;
 import edu.uwf.tabletopgroup.rest.TableTopRestClientUser;
+import edu.uwf.tabletopgroup.R;
 
 /**
  * Created by Brandon on 2/21/2016.

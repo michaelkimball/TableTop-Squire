@@ -1,4 +1,4 @@
-package edu.uwf.tabletopgroup.tabletop_squire;
+package edu.uwf.tabletopgroup.tabletop_squire.create_character;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -18,6 +18,7 @@ import java.util.Random;
 
 import edu.uwf.tabletopgroup.models.Character;
 import edu.uwf.tabletopgroup.rest.TableTopRestClientUser;
+import edu.uwf.tabletopgroup.R;
 
 /**
  * Created by michael on 3/7/16.

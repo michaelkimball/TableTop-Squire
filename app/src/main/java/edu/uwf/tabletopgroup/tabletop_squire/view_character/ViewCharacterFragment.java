@@ -1,4 +1,4 @@
-package edu.uwf.tabletopgroup.tabletop_squire;
+package edu.uwf.tabletopgroup.tabletop_squire.view_character;
 
 
 import android.os.Bundle;
@@ -11,12 +11,14 @@ import android.widget.TextView;
 
 import edu.uwf.tabletopgroup.models.Character;
 import edu.uwf.tabletopgroup.models.User;
+import edu.uwf.tabletopgroup.R;
+import edu.uwf.tabletopgroup.rest.TableTopKeys;
 
 /**
  * Created by michael on 2/29/16.
  */
 public class ViewCharacterFragment extends Fragment {
-    public static final String CHARACTER_KEY = "character";
+    public static final String CHARACTER_KEY = "character_id";
     private Character character;
     private TextView nameTV;
     private TextView raceTV;
@@ -38,12 +40,23 @@ public class ViewCharacterFragment extends Fragment {
         return viewCharacterFragment;
     }
 
+    public static ViewCharacterFragment newInstance(Character character){
+        ViewCharacterFragment viewCharacterFragment = new ViewCharacterFragment();
+        Bundle args = new Bundle();
+        args.putParcelable(TableTopKeys.KEY_CHARACTER, character);
+        viewCharacterFragment.setArguments(args);
+        return viewCharacterFragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_view_character, container, false);
         Bundle args = getArguments();
-        character = User.getCharacter((String)args.get(CHARACTER_KEY));
+        if(args.containsKey(CHARACTER_KEY))
+            character = User.getCharacter((String)args.get(CHARACTER_KEY));
+        else if(args.containsKey(TableTopKeys.KEY_CHARACTER))
+            character = args.getParcelable(TableTopKeys.KEY_CHARACTER);
         if(character != null)
             initializeTextViews(v);
         return v;
