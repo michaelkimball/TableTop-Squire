@@ -74,9 +74,13 @@ public class WelcomeActivity extends Activity {
     }
 
     public void btn_create_game_room_onClick(View view) {
+        Intent intent = new Intent(this, GameRoom.class);
+        startActivity(intent);
     }
 
     public void btn_join_game_room_onClick(View view) {
+        Intent intent = new Intent(this, JoinRoomActivity.class);
+        startActivity(intent);
     }
 
     public void btn_view_account_onClick(View view){
