@@ -26,7 +26,7 @@ public class JoinRoomFragment extends Fragment {
     private Socket mSocket;
     private Button joinRoom;
     private EditText gameID;
-    @Nullable
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_join_room, container, false);
@@ -34,17 +34,20 @@ public class JoinRoomFragment extends Fragment {
         gameID = (EditText)v.findViewById(R.id.game_id);
         joinRoom = (Button)v.findViewById(R.id.join);
 
-        Log.d(TAG, "Before socket creation");
-        try {
-            mSocket = IO.socket(TableTopRestClient.getBaseUrl());
-        } catch (URISyntaxException e) {
-            Log.e(TAG, "Socket error: ", e);
-        }
-        Log.d(TAG, "After socket creation");
 
-        mSocket.connect();
+        if(SocketManager.connection == null || !SocketManager.connection.connected()) {
+            try {
+                Log.d(TAG, "Before socket creation");
+                SocketManager.connection = IO.socket(TableTopRestClient.getBaseUrl());
+            } catch (URISyntaxException e) {
+                Log.e(TAG, "Socket error: ", e);
+            }
+            Log.d(TAG, "After socket creation");
+        }
+
+        SocketManager.connection.connect();
         Log.d(TAG, "After connect");
-        mSocket.emit("join", mSocket);
+        SocketManager.connection.emit("join", mSocket);
         Log.d(TAG, "Emit join");
 
         return v;

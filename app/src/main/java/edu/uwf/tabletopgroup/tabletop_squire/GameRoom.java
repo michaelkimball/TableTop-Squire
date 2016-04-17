@@ -2,6 +2,7 @@ package edu.uwf.tabletopgroup.tabletop_squire;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -18,7 +19,8 @@ import java.net.URISyntaxException;
 
 import edu.uwf.tabletopgroup.rest.TableTopRestClient;
 
-public class GameRoom extends Activity {
+@Deprecated
+public class GameRoom extends FragmentActivity {
     public static final String TAG = "GameRoom";
     private Socket mSocket;
     private EditText roomID;
