@@ -1,14 +1,45 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="edu.uwf.tabletopgroup.tabletop_squire.ChatBoxFragment">
+    >
 
-    <!-- TODO: Update blank fragment layout -->
-    <EditText
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="308dp"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimaryTransparent"
+        >
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/chatbox"
+            android:background="@color/colorPrimary"
+            android:layout_margin="5dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment"
-        android:id="@+id/chatbox" />
+        android:orientation="horizontal"
+        android:weightSum="1">
 
-</FrameLayout>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/inputline"
+            android:layout_weight="0.99" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_send_chat"
+            android:text="@string/send_chat" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -35,6 +35,7 @@ public class CreateCharacterFragment extends Fragment {
     private Button rollBT;
     private Button saveBT;
     private TableTopRestClientUser client;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
