@@ -5,14 +5,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import org.json.JSONException;
 
+import edu.uwf.tabletopgroup.models.Player;
 import edu.uwf.tabletopgroup.models.User;
 import edu.uwf.tabletopgroup.rest.SocketService;
+import edu.uwf.tabletopgroup.rest.TableTopKeys;
 import edu.uwf.tabletopgroup.rest.TableTopRestClientUser;
 import edu.uwf.tabletopgroup.tabletop_squire.create_character.CreateCharacterActivity;
 import edu.uwf.tabletopgroup.tabletop_squire.game_lobby.GameLobbyActivity;
@@ -21,7 +24,7 @@ import edu.uwf.tabletopgroup.tabletop_squire.view_character.ViewCharacterActivit
 import edu.uwf.tabletopgroup.tabletop_squire.view_character.ViewCharacterFragment;
 import edu.uwf.tabletopgroup.R;
 
-public class WelcomeActivity extends Activity {
+public class WelcomeActivity extends AppCompatActivity {
     private static final String TAG = "WelcomeActivity";
     private Button viewCharacter;
     private Button createCharacter;
@@ -50,6 +53,8 @@ public class WelcomeActivity extends Activity {
             }
         });
         Intent i = new Intent(getApplicationContext(), SocketService.class);
+        Player player = new Player(User.getUsername(), User.getEmail());
+        i.putExtra(TableTopKeys.KEY_PLAYER, player);
         startService(i);
         try {
             client.getCharacters(new Handler.Callback() {
@@ -99,7 +104,7 @@ public class WelcomeActivity extends Activity {
 
     public void btn_join_game_room_onClick(View view) {
         JoinGameByIdDialog dialog = new JoinGameByIdDialog();
-        dialog.show(getFragmentManager(), "join_game");
+        dialog.show(getSupportFragmentManager(), "join_game");
     }
 
     public void btn_view_account_onClick(View view){

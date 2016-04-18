@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 
 import edu.uwf.tabletopgroup.R;
@@ -46,6 +47,14 @@ public class PlayerListFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_player_list, container, false);
         lv = (ListView)v.findViewById(R.id.player_list);
         /**************** Create Custom Adapter *********/
+        Button invite = (Button)v.findViewById(R.id.invite);
+        invite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InviteDialog dialog = new InviteDialog();
+                dialog.show(getFragmentManager(), "invite");
+            }
+        });
         setAdapter();
         return v;
     }

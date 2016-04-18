@@ -26,6 +26,7 @@ public class Player implements Parcelable {
     public Player(String name, String email){
         this.name = name;
         this.email = email;
+        this.character = null;
     }
     public Player(String name, String email, Character character){
         this.name = name;
@@ -111,7 +112,8 @@ public class Player implements Parcelable {
         JSONObject object = new JSONObject();
         object.put(TableTopKeys.KEY_NAME, name);
         object.put(TableTopKeys.KEY_EMAIL, email);
-        object.put(TableTopKeys.KEY_CHARACTER, character.toJSON());
+        if(character != null)
+            object.put(TableTopKeys.KEY_CHARACTER, character.toJSON());
         return object;
     }
 }

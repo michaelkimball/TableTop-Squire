@@ -29,6 +29,7 @@ import edu.uwf.tabletopgroup.tabletop_squire.game_room.GameRoomActivity;
  */
 public class SocketBroadcastReceiver extends BroadcastReceiver {
     public static final int MESSAGE_ID = 9403;
+    public static final int INVITE_ID = 9404;
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.d("SocketBroadcastReceiver", "onReceive() start");
@@ -43,7 +44,29 @@ public class SocketBroadcastReceiver extends BroadcastReceiver {
             case TableTopKeys.ACTION_GAME_JOINED:
                 onGameJoined(context, intent);
                 break;
+            case TableTopKeys.ACTION_GAME_INVITE:
+                onGameInvite(context, intent);
+                break;
         }
+    }
+
+    private void onGameInvite(Context context, Intent intent){
+        String gameId = intent.getStringExtra(TableTopKeys.KEY_GAME_ID);
+        String playerName = intent.getStringExtra(TableTopKeys.KEY_PLAYER_NAME);
+        Intent i = new Intent(TableTopKeys.ACTION_JOIN_GAME);
+        Player player = new Player(User.getUsername(), User.getEmail(), User.getCharacter(0));
+        i.putExtra(TableTopKeys.KEY_GAME_ID, gameId);
+        i.putExtra(TableTopKeys.KEY_PLAYER, player);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+        NotificationCompat.Builder notifyBuilder =
+                new NotificationCompat.Builder(context)
+                        .setSmallIcon(android.R.drawable.ic_menu_agenda)
+                        .setContentTitle("TableTopSquire Invite")
+                        .setContentText("Join: " + gameId + " From: " + playerName)
+                        .setContentIntent(pendingIntent);
+        NotificationManager notificationManager =
+                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(INVITE_ID, notifyBuilder.build());
     }
 
     private void onGameJoined(Context context, Intent intent) {

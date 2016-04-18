@@ -45,6 +45,9 @@
             <intent-filter android:priority="100000">
                 <action android:name="edu.uwf.tabletopgroup.GAME_JOINED"/>
             </intent-filter>
+            <intent-filter android:priority="100000">
+                <action android:name="edu.uwf.tabletopgroup.GAME_INVITE"/>
+            </intent-filter>
         </receiver>
 
     </application>

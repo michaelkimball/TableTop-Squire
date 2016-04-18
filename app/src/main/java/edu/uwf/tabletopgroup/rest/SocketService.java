@@ -37,10 +37,7 @@ public class SocketService extends Service {
     private static final String TAG = "SocketService";
     private IBinder iBinder = new SocketServiceBinder();
     private Socket socket;
-    private String player;
-    public void setPlayer(String player){
-        this.player = player;
-    }
+    private Player player;
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -48,7 +45,7 @@ public class SocketService extends Service {
             Log.e(TAG, "onReceive " + action);
             try {
                 connectToSocketIO();
-            }catch(URISyntaxException e){
+            }catch(URISyntaxException | JSONException e){
                 e.printStackTrace();
             }
             switch(action){
@@ -56,8 +53,6 @@ public class SocketService extends Service {
                     try {
                         String json = intent.getStringExtra(TableTopKeys.KEY_GAME);
                         JSONObject object = new JSONObject(json);
-                        String playerName = object.getString(TableTopKeys.KEY_PLAYER);
-                        setPlayer(playerName);
                         socket.emit("createNewGame", object);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -77,7 +72,6 @@ public class SocketService extends Service {
                     try {
                         String gameId = intent.getStringExtra(TableTopKeys.KEY_GAME_ID);
                         Player player = intent.getParcelableExtra(TableTopKeys.KEY_PLAYER);
-                        setPlayer(player.getName());
                         JSONObject object = new JSONObject();
                         object.put("gameID", gameId);
                         object.put("player", player.toJSON());
@@ -85,6 +79,20 @@ public class SocketService extends Service {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    break;
+                case TableTopKeys.ACTION_INVITE_PLAYER_NAME:
+                    try {
+                        String gameId = intent.getStringExtra(TableTopKeys.KEY_GAME_ID);
+                        String name = intent.getStringExtra(TableTopKeys.KEY_NAME);
+                        JSONObject object = new JSONObject();
+                        object.put("gameID", gameId);
+                        object.put("name", name);
+                        object.put("playerName", player.getName());
+                        socket.emit("invitePlayerName", object);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    break;
             }
         }
     };
@@ -96,10 +104,11 @@ public class SocketService extends Service {
         filter.addAction(TableTopKeys.ACTION_CREATE_GAME); //further more
         filter.addAction(TableTopKeys.ACTION_SEND_MESSAGE_TO_ROOM);
         filter.addAction(TableTopKeys.ACTION_JOIN_GAME);
+        filter.addAction(TableTopKeys.ACTION_INVITE_PLAYER_NAME);
         registerReceiver(receiver, filter);
     }
 
-    private void connectToSocketIO() throws URISyntaxException {
+    private void connectToSocketIO() throws URISyntaxException, JSONException {
         if(socket == null)
             socket = IO.socket(TableTopRestClient.BASE_URL);
         if(!socket.connected()) {
@@ -107,18 +116,22 @@ public class SocketService extends Service {
             socket.on("roomData", new OnRoomData());
             socket.on("joinedGame", new OnJoinedGame());
             socket.on("newPlayerJoinedGame", new OnNewPlayerJoinedGame());
+            socket.on("gameInvite", new OnGameInvite());
             socket.connect();
-            socket.emit("join");
+            socket.emit("join", player.toJSON());
         }
     }
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         try {
+            player = intent.getParcelableExtra(TableTopKeys.KEY_PLAYER);
             connectToSocketIO();
         } catch (URISyntaxException e) {
             Log.e(TAG, "onStartCommand", e);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-        return Service.START_STICKY;
+        return Service.START_REDELIVER_INTENT;
     }
 
     @Nullable
@@ -217,6 +230,23 @@ public class SocketService extends Service {
                 sendBroadcast(i);
             } catch (JSONException e) {
                 Log.e(TAG, "OnNewPlayerJoinedGame JSON error", e);
+            }
+        }
+    }
+
+    private class OnGameInvite implements Emitter.Listener {
+        @Override
+        public void call(Object... args) {
+            JSONObject data = (JSONObject) args[0];
+            try{
+                String gameId = data.getString(TableTopKeys.KEY_GAME_ID);
+                String playerName = data.getString(TableTopKeys.KEY_PLAYER_NAME);
+                Intent i = new Intent(TableTopKeys.ACTION_GAME_INVITE);
+                i.putExtra(TableTopKeys.KEY_GAME_ID, gameId);
+                i.putExtra(TableTopKeys.KEY_PLAYER_NAME, playerName);
+                sendBroadcast(i);
+            } catch (JSONException e) {
+                Log.e(TAG, "OnGameInvite JSON error", e);
             }
         }
     }

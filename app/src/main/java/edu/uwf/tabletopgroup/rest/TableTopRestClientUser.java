@@ -360,7 +360,7 @@ public class TableTopRestClientUser {
     public void putCharacter(Character character, final Handler.Callback callback){
         RequestParams params = getCharacterRequestParams(character);
         params.add(TableTopKeys.KEY_ID, character.getId());
-        client.put("character", params, new JsonHttpResponseHandler(){
+        client.put("character/" + character.getId(), params, new JsonHttpResponseHandler(){
             Message message = new Message();
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {

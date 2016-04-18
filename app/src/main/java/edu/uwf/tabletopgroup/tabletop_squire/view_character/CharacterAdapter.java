@@ -116,7 +116,7 @@ public class CharacterAdapter extends BaseAdapter implements View.OnClickListene
         String id = User.getCharacter(holder.position).getId();
         if(id == null)
             return;
-        Fragment newFragment = ViewCharacterFragment.newInstance(id);
+        Fragment newFragment = EditCharacterFragment.newInstance(id);
         FragmentManager fm = fragment.getFragmentManager();
         Fragment fragmentToRemove = fm.findFragmentByTag("character_details");
         if(fragmentToRemove != null){
