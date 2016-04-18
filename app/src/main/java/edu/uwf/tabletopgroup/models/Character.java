@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import edu.uwf.tabletopgroup.rest.TableTopKeys;
 
 /**
@@ -66,19 +69,21 @@ public class Character implements Parcelable {
         setStats(ints[0], ints[1], ints[2], ints[3], ints[4], ints[5]);
         setLevel(ints[6]);
         setExperience(ints[7]);
-//        Bundle bundle = in.readBundle();
-//        this.mId = bundle.getString(TableTopKeys.KEY_ID);
-//        this.mName = bundle.getString(TableTopKeys.KEY_NAME);
-//        this.mRace = bundle.getString(TableTopKeys.KEY_RACE);
-//        this.mCharacterClass = bundle.getString(TableTopKeys.KEY_CLASS);
-//        this.mStrength = bundle.getInt(TableTopKeys.KEY_STRENGTH);
-//        this.mDexterity = bundle.getInt(TableTopKeys.KEY_DEXTERITY);
-//        this.mConstitution = bundle.getInt(TableTopKeys.KEY_CONSTITUTION);
-//        this.mIntelligence = bundle.getInt(TableTopKeys.KEY_INTELLIGENCE);
-//        this.mWisdom = bundle.getInt(TableTopKeys.KEY_WISDOM);
-//        this.mCharisma = bundle.getInt(TableTopKeys.KEY_CHARISMA);
-//        this.mLevel = bundle.getInt(TableTopKeys.KEY_LEVEL);
-//        this.mExperience = bundle.getInt(TableTopKeys.KEY_EXPERIENCE);
+    }
+
+    public Character(JSONObject object) throws JSONException {
+        mId = object.getString(TableTopKeys.KEY_ID);
+        mName = object.getString(TableTopKeys.KEY_NAME);
+        mRace = object.getString(TableTopKeys.KEY_RACE);
+        mCharacterClass = object.getString(TableTopKeys.KEY_CLASS);
+        mStrength = object.getInt(TableTopKeys.KEY_STRENGTH);
+        mDexterity = object.getInt(TableTopKeys.KEY_DEXTERITY);
+        mConstitution = object.getInt(TableTopKeys.KEY_CONSTITUTION);
+        mIntelligence = object.getInt(TableTopKeys.KEY_INTELLIGENCE);
+        mWisdom = object.getInt(TableTopKeys.KEY_WISDOM);
+        mCharisma = object.getInt(TableTopKeys.KEY_CHARISMA);
+        mLevel = object.getInt(TableTopKeys.KEY_LEVEL);
+        mExperience = object.getInt(TableTopKeys.KEY_EXPERIENCE);
     }
 
     public void setStats(int strength, int dexterity, int constitution, int intelligence, int wisdom, int charisma){
@@ -203,20 +208,6 @@ public class Character implements Parcelable {
         };
         dest.writeStringArray(strings);
         dest.writeIntArray(ints);
-//        Bundle bundle = new Bundle();
-//        bundle.putString(TableTopKeys.KEY_ID, mId);
-//        bundle.putString(TableTopKeys.KEY_NAME, mName);
-//        bundle.putString(TableTopKeys.KEY_RACE, mRace);
-//        bundle.putString(TableTopKeys.KEY_CLASS, mCharacterClass);
-//        bundle.putInt(TableTopKeys.KEY_STRENGTH, mStrength);
-//        bundle.putInt(TableTopKeys.KEY_DEXTERITY, mDexterity);
-//        bundle.putInt(TableTopKeys.KEY_CONSTITUTION, mConstitution);
-//        bundle.putInt(TableTopKeys.KEY_INTELLIGENCE, mIntelligence);
-//        bundle.putInt(TableTopKeys.KEY_WISDOM, mWisdom);
-//        bundle.putInt(TableTopKeys.KEY_CHARISMA, mCharisma);
-//        bundle.putInt(TableTopKeys.KEY_LEVEL, mLevel);
-//        bundle.putInt(TableTopKeys.KEY_EXPERIENCE, mExperience);
-//        dest.writeBundle(bundle);
     }
 
     public static final Parcelable.Creator<Character> CREATOR = new Parcelable.Creator<Character>(){
@@ -232,4 +223,20 @@ public class Character implements Parcelable {
         }
     };
 
+    public JSONObject toJSON() throws JSONException {
+        JSONObject object = new JSONObject();
+        object.put(TableTopKeys.KEY_ID, mId);
+        object.put(TableTopKeys.KEY_NAME, mName);
+        object.put(TableTopKeys.KEY_RACE, mRace);
+        object.put(TableTopKeys.KEY_CLASS, mCharacterClass);
+        object.put(TableTopKeys.KEY_STRENGTH, mStrength);
+        object.put(TableTopKeys.KEY_DEXTERITY, mDexterity);
+        object.put(TableTopKeys.KEY_CONSTITUTION, mConstitution);
+        object.put(TableTopKeys.KEY_INTELLIGENCE, mIntelligence);
+        object.put(TableTopKeys.KEY_WISDOM, mWisdom);
+        object.put(TableTopKeys.KEY_CHARISMA, mCharisma);
+        object.put(TableTopKeys.KEY_LEVEL, mLevel);
+        object.put(TableTopKeys.KEY_EXPERIENCE, mExperience);
+        return object;
+    }
 }

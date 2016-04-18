@@ -17,6 +17,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import edu.uwf.tabletopgroup.models.Invite;
+import edu.uwf.tabletopgroup.models.Player;
 import edu.uwf.tabletopgroup.models.User;
 import edu.uwf.tabletopgroup.R;
 import edu.uwf.tabletopgroup.rest.TableTopKeys;
@@ -57,9 +58,9 @@ public class GameLobbyFragment extends Fragment {
                 if(!gameName.isEmpty()) {
                     try {
                         JSONObject object = new JSONObject();
+                        Player player = new Player(User.getUsername(), User.getEmail(), User.getCharacter(0));
                         object.put(TableTopKeys.KEY_GAME, gameName);
-                        object.put(TableTopKeys.KEY_PLAYER, User.getUsername());
-                        object.put(TableTopKeys.KEY_CHARACTER, User.getCharacter(0).getName());
+                        object.put(TableTopKeys.KEY_PLAYER, player.toJSON());
                         Intent i = new Intent(TableTopKeys.ACTION_CREATE_GAME);
                         i.putExtra(TableTopKeys.KEY_GAME, object.toString());
                         getActivity().sendBroadcast(i);

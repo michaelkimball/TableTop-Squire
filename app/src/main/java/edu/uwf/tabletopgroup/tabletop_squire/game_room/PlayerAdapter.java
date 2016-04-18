@@ -111,9 +111,6 @@ public class PlayerAdapter extends BaseAdapter implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         ViewHolder holder = (ViewHolder)v.getTag();
-        String id = User.getCharacter(holder.position).getId();
-        if(id == null)
-            return;
         Fragment newFragment = ViewCharacterFragment.newInstance(holder.player.getCharacter());
         FragmentManager fm = fragment.getFragmentManager();
         Fragment fragmentToRemove = fm.findFragmentByTag("player_details");
@@ -121,6 +118,7 @@ public class PlayerAdapter extends BaseAdapter implements View.OnClickListener {
             FragmentTransaction removalTransaction = fm.beginTransaction();
             removalTransaction.remove(fragmentToRemove).commit();
             fm.executePendingTransactions();
+            fm.popBackStack();
         }
         FragmentTransaction transaction = fm.beginTransaction();
         boolean mDualPane = fragment.getActivity().findViewById(R.id.dual_pane)!=null;
@@ -128,6 +126,7 @@ public class PlayerAdapter extends BaseAdapter implements View.OnClickListener {
             transaction.replace(R.id.fragment_container, newFragment);
         else {
             transaction.replace(R.id.details_container, newFragment, "player_details");
+            transaction.addToBackStack(null);
         }
         transaction.commit();
     }}

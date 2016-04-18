@@ -58,7 +58,6 @@ public class SocketService extends Service {
                         JSONObject object = new JSONObject(json);
                         String playerName = object.getString(TableTopKeys.KEY_PLAYER);
                         setPlayer(playerName);
-                        object.put("socketID", socket.id());
                         socket.emit("createNewGame", object);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -69,7 +68,6 @@ public class SocketService extends Service {
                         Message message = intent.getParcelableExtra(TableTopKeys.KEY_MESSAGE);
                         JSONObject json = message.toJSON();
                         Log.d(TAG, json.toString());
-                        json.put("socketID", socket.id());
                         socket.emit("messageRoom", json);
                     }catch(JSONException e){
                         e.printStackTrace();
@@ -78,14 +76,11 @@ public class SocketService extends Service {
                 case TableTopKeys.ACTION_JOIN_GAME:
                     try {
                         String gameId = intent.getStringExtra(TableTopKeys.KEY_GAME_ID);
-                        String playerName = intent.getStringExtra(TableTopKeys.KEY_PLAYER);
-                        setPlayer(playerName);
-                        String characterName = intent.getStringExtra(TableTopKeys.KEY_CHARACTER);
+                        Player player = intent.getParcelableExtra(TableTopKeys.KEY_PLAYER);
+                        setPlayer(player.getName());
                         JSONObject object = new JSONObject();
                         object.put("gameID", gameId);
-                        object.put("playerName", playerName);
-                        object.put("characterName", characterName);
-                        object.put("socketID", socket.id());
+                        object.put("player", player.toJSON());
                         socket.emit("playerJoinGame", object);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -110,7 +105,8 @@ public class SocketService extends Service {
         if(!socket.connected()) {
             socket.on("message", new OnMessage());
             socket.on("roomData", new OnRoomData());
-            socket.on("playerJoinedRoom", new OnJoinedGame());
+            socket.on("joinedGame", new OnJoinedGame());
+            socket.on("newPlayerJoinedGame", new OnNewPlayerJoinedGame());
             socket.connect();
             socket.emit("join");
         }
@@ -194,10 +190,7 @@ public class SocketService extends Service {
                 ArrayList<Player> players = new ArrayList<>();
                 for(int i = 0; i < playerListJSON.length(); i++){
                     JSONObject playerJSON = playerListJSON.getJSONObject(i);
-                    Player player = new Player();
-                    player.setName(playerJSON.getString(TableTopKeys.KEY_NAME));
-                    Character character = new Character(playerJSON.getString(TableTopKeys.KEY_CHARACTER));
-                    player.setCharacter(character);
+                    Player player = new Player(playerJSON.getJSONObject(TableTopKeys.KEY_PLAYER));
                     players.add(player);
                 }
                 Game game = new Game(gameId, socketId);
@@ -208,7 +201,22 @@ public class SocketService extends Service {
                 i.putExtra(TableTopKeys.KEY_GAME, bundle);
                 sendBroadcast(i);
             } catch (JSONException e) {
-                Log.e(TAG, "OnRoomData JSON error", e);
+                Log.e(TAG, "OnJoinedGame JSON error", e);
+            }
+        }
+    }
+
+    private class OnNewPlayerJoinedGame implements Emitter.Listener {
+        @Override
+        public void call(Object... args) {
+            JSONObject data = (JSONObject) args[0];
+            try{
+                Player player = new Player(data);
+                Intent i = new Intent(TableTopKeys.ACTION_PLAYER_JOINED);
+                i.putExtra(TableTopKeys.KEY_PLAYER, player);
+                sendBroadcast(i);
+            } catch (JSONException e) {
+                Log.e(TAG, "OnNewPlayerJoinedGame JSON error", e);
             }
         }
     }

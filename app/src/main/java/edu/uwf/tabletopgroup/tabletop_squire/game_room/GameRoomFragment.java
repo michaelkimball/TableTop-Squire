@@ -62,8 +62,6 @@ public class GameRoomFragment extends Fragment {
         Bundle args = getArguments();
         if(args.containsKey(TableTopKeys.KEY_GAME)) {
             game = args.getParcelable(TableTopKeys.KEY_GAME);
-//            TextView GameId = (TextView) v.findViewById(R.id.game_name);
-//            GameId.setText(game.getGameId());
         }
         if(args.containsKey(TableTopKeys.KEY_PLAYER))
             player = args.getParcelable(TableTopKeys.KEY_PLAYER);

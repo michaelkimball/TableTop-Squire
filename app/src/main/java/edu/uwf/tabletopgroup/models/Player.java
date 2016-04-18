@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import edu.uwf.tabletopgroup.rest.TableTopKeys;
 
 /**
@@ -43,6 +46,13 @@ public class Player implements Parcelable {
         setName(strings[0]);
         setEmail(strings[1]);
         setCharacter((Character)in.readValue(Character.class.getClassLoader()));
+    }
+
+    public Player(JSONObject object) throws JSONException {
+        name = object.getString(TableTopKeys.KEY_NAME);
+        email = object.getString(TableTopKeys.KEY_EMAIL);
+        JSONObject characterJSON = object.getJSONObject(TableTopKeys.KEY_CHARACTER);
+        character = new Character(characterJSON);
     }
 
     public Player() {
@@ -96,4 +106,12 @@ public class Player implements Parcelable {
             return new Player[size];
         }
     };
+
+    public JSONObject toJSON() throws JSONException {
+        JSONObject object = new JSONObject();
+        object.put(TableTopKeys.KEY_NAME, name);
+        object.put(TableTopKeys.KEY_EMAIL, email);
+        object.put(TableTopKeys.KEY_CHARACTER, character.toJSON());
+        return object;
+    }
 }

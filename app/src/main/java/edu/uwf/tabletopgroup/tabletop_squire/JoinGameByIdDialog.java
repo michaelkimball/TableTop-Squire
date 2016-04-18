@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import edu.uwf.tabletopgroup.R;
+import edu.uwf.tabletopgroup.models.Player;
 import edu.uwf.tabletopgroup.models.User;
 import edu.uwf.tabletopgroup.rest.TableTopKeys;
 
@@ -43,9 +44,9 @@ public class JoinGameByIdDialog extends DialogFragment{
                     Toast.makeText(getActivity(), "Enter a game id to join a game.", Toast.LENGTH_LONG).show();
                 }else{
                     Intent i = new Intent(TableTopKeys.ACTION_JOIN_GAME);
+                    Player player = new Player(User.getUsername(), User.getEmail(), User.getCharacter(0));
                     i.putExtra(TableTopKeys.KEY_GAME_ID, gameId);
-                    i.putExtra(TableTopKeys.KEY_PLAYER, User.getUsername());
-                    i.putExtra(TableTopKeys.KEY_CHARACTER, User.getCharacter(0).getName());
+                    i.putExtra(TableTopKeys.KEY_PLAYER, player);
                     getActivity().sendBroadcast(i);
                 }
                 dismiss();
