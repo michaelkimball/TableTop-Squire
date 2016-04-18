@@ -91,6 +91,10 @@ public class Game implements Parcelable{
         players.add(player);
     }
 
+    public void setPlayers(ArrayList<Player> players){
+        this.players = players;
+    }
+
     public ArrayList<Player> getPlayers(){
         return players;
     }

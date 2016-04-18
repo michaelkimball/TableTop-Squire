@@ -18,6 +18,7 @@ public class TableTopRestClient  {
     private static PersistentCookieStore cookieStore;
     private static AsyncHttpClient client;
     public static final String BASE_URL = "http://10.0.2.2:3000/";
+//    public static final String BASE_URL = "http://104.236.56.210:3000/";
     private static final String API_URL = BASE_URL + "api/";
 
     /**

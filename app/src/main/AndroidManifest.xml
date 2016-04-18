@@ -37,10 +37,13 @@
         </service>
         <receiver android:name=".rest.SocketBroadcastReceiver">
             <intent-filter android:priority="100000">
-                <action android:name="edu.uwf.tabletopgroup.MESSAGE_SENT"/>
+                <action android:name="edu.uwf.tabletopgroup.MESSAGE_RECEIVED"/>
             </intent-filter>
             <intent-filter android:priority="100000">
                 <action android:name="edu.uwf.tabletopgroup.GAME_CREATED"/>
+            </intent-filter>
+            <intent-filter android:priority="100000">
+                <action android:name="edu.uwf.tabletopgroup.GAME_JOINED"/>
             </intent-filter>
         </receiver>
 

@@ -45,6 +45,9 @@ public class Player implements Parcelable {
         setCharacter((Character)in.readValue(Character.class.getClassLoader()));
     }
 
+    public Player() {
+    }
+
     public String getName() {
         return name;
     }

@@ -1,17 +1,25 @@
 package edu.uwf.tabletopgroup.tabletop_squire.game_room;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +46,15 @@ public class GameRoomFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private Game game;
     private Player player;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(TableTopKeys.ACTION_MESSAGE_RECEIVED);
+        getActivity().registerReceiver(receiver, filter);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -92,4 +109,30 @@ public class GameRoomFragment extends Fragment {
     private void scrollToBottom() {
         mMessagesView.scrollToPosition(mAdapter.getItemCount() - 1);
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().unregisterReceiver(receiver);
+    }
+
+    private final BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            Log.e(TAG, "onReceive " + action);
+            switch(action){
+                case TableTopKeys.ACTION_MESSAGE_RECEIVED:
+                    onMessageSent(intent);
+                    break;
+            }
+        }
+        public void onMessageSent(Intent intent){
+            Log.d("SBR", "onMessageSent() start");
+            String message = intent.getStringExtra("message");
+            String playerName = intent.getStringExtra("playerName");
+            addMessage(new Message(playerName, message));
+        }
+
+    };
 }

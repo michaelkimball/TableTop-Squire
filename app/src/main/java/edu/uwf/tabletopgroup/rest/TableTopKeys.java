@@ -31,4 +31,5 @@ public class TableTopKeys {
     public static final String ACTION_CREATE_GAME = "edu.uwf.tabletopgroup.CREATE_GAME";
     public static final String ACTION_GAME_CREATED = "edu.uwf.tabletopgroup.GAME_CREATED";
     public static final String ACTION_JOIN_GAME = "edu.uwf.tabletopgroup.JOIN_GAME";
+    public static final String ACTION_GAME_JOINED = "edu.uwf.tabletopgroup.GAME_JOINED";
 }

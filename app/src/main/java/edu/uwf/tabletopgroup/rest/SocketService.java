@@ -11,17 +11,19 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 
-import edu.uwf.tabletopgroup.models.Game;
-import edu.uwf.tabletopgroup.models.Message;
+import edu.uwf.tabletopgroup.models.*;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 
+import edu.uwf.tabletopgroup.models.Character;
 /**
  * TableTopSquire
  * SocketService.java
@@ -56,6 +58,7 @@ public class SocketService extends Service {
                         JSONObject object = new JSONObject(json);
                         String playerName = object.getString(TableTopKeys.KEY_PLAYER);
                         setPlayer(playerName);
+                        object.put("socketID", socket.id());
                         socket.emit("createNewGame", object);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -64,8 +67,10 @@ public class SocketService extends Service {
                 case TableTopKeys.ACTION_SEND_MESSAGE_TO_ROOM:
                     try{
                         Message message = intent.getParcelableExtra(TableTopKeys.KEY_MESSAGE);
-                        Log.d(TAG, message.toJSON().toString());
-                        socket.emit("messageRoom", message.toJSON());
+                        JSONObject json = message.toJSON();
+                        Log.d(TAG, json.toString());
+                        json.put("socketID", socket.id());
+                        socket.emit("messageRoom", json);
                     }catch(JSONException e){
                         e.printStackTrace();
                     }
@@ -80,6 +85,7 @@ public class SocketService extends Service {
                         object.put("gameID", gameId);
                         object.put("playerName", playerName);
                         object.put("characterName", characterName);
+                        object.put("socketID", socket.id());
                         socket.emit("playerJoinGame", object);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -184,10 +190,21 @@ public class SocketService extends Service {
                 Log.e(TAG, "OnJoinedGame");
                 String gameId = data.getString("gameID");
                 String socketId = data.getString("socketID");
+                JSONArray playerListJSON = data.getJSONArray("players");
+                ArrayList<Player> players = new ArrayList<>();
+                for(int i = 0; i < playerListJSON.length(); i++){
+                    JSONObject playerJSON = playerListJSON.getJSONObject(i);
+                    Player player = new Player();
+                    player.setName(playerJSON.getString(TableTopKeys.KEY_NAME));
+                    Character character = new Character(playerJSON.getString(TableTopKeys.KEY_CHARACTER));
+                    player.setCharacter(character);
+                    players.add(player);
+                }
                 Game game = new Game(gameId, socketId);
                 Bundle bundle = new Bundle();
                 bundle.putParcelable(TableTopKeys.KEY_GAME, game);
-                Intent i = new Intent(TableTopKeys.ACTION_GAME_CREATED);
+                bundle.putParcelableArrayList(TableTopKeys.KEY_PLAYER_LIST, players);
+                Intent i = new Intent(TableTopKeys.ACTION_GAME_JOINED);
                 i.putExtra(TableTopKeys.KEY_GAME, bundle);
                 sendBroadcast(i);
             } catch (JSONException e) {
